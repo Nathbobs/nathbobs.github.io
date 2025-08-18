@@ -22,12 +22,12 @@ page_data:
         - title: "Flutter"
           type: id_flutter
           color: "black"
-        - title: "CSharp"
-          type: id_csharp
-          color: "gray"
-        - title: "Java"
-          type: id_java
-          color: "#27374D"
+        # - title: "CSharp"
+        #   type: id_csharp
+        #   color: "gray"
+        # - title: "Java"
+        #   type: id_java
+        #   color: "#27374D"
 
     list:
         # python

@@ -2,13 +2,13 @@
 # Owner's Personal Information
 ###########################################################
 # This is your brand name
-brand: "Jiyeon Na"
+brand: "Nathaniel Abegunde"
 
 # text below the brand name
 brand_sub_text: "$site_intro"
 
 # used for seo meta post author (if it's not defined in post)
-name: "Jiyeon Na"
+name: "Nathaniel Abegunde"
 
 # home page top header texts
 home:
@@ -23,7 +23,7 @@ about:
 
 # if you don't want to add copyright year, comment or leave it blank.
 # the year during which the claimed copyright for the work was first asserted.
-copyright_start_year: "2023"
+copyright_start_year: "2025"
 
 # make sure creative_commons.enable is true in _data/conf/main.yml file
 creative_commons:
@@ -42,19 +42,19 @@ creative_commons:
 # seo meta this is needed for each language
 # If meta_description is not defined in front matter, it's created from (post / page) content,
 # if it has no content, this will be used for page description. It is also used in manifest.json
-meta_common_description: "This is Jiyeon Na's personal portfolio website. I am majoring in Computer Software Engineering and striving to become a backend developer."
+meta_common_description: "Nathaniel here, Senior year Computer Software Engineering student, interested in Computer Vision and Backend systems."
 
 # contact options (side nav bottom and about page)
 # the order of the items will be shown as here.
 # comment to remove any contact item
 contacts:
-  - github: "najiyeon"
-  - email: "skwldus@hanyang.ac.kr"
+  - github: "nathbobs"
+  - email: "nathbobs@hanyang.ac.kr"
   #- linkedin: ""
   #- twitter: ""
   #- mastodon: ""
-  - instagram: "o2o1o5"
-  - youtube: "@user-qq3ji6vk8y"
+  - instagram: "nathbobz"
+  - youtube: "@nathbobs"
   #- facebook: ""
 # to add more, check the _data/const/contact.yml file
 #  - your_new_contact: ""

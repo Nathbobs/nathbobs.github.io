@@ -171,15 +171,13 @@ privacy-policy:
 
 # constants to be replaced for
 constants:
-  greetings: Greetings!
+  greetings: Hello!
   welcome: Hi there! I am
-  intro: Developer / Hanyang Univ.
+  intro: Software Engineer / Hanyang University
   subtitle: | 
-    I am a dedicated student enrolled in the Computer Software Engineering program at Hanyang University. 
-    
-    My aspiration is to specialize as a backend developer. Through rigorous studies and hands-on experiences, I am diligently enhancing my skills and knowledge in pursuit of this goal. 
-    
-    Here's to a future of innovation and endless learning!
+    4th year Computer Software Engineering student at Hanyang University in Seoul Korea. 
+    I'm passionate about most things tech, especially computer vision with a keen interest in autonomous driving. 
+    My final year capstone project is focused on 3D reconstruction from multiple images, where i explore NeRF and 3D Gaussian Splatting technologies.
 
 # for contact form
 contact_form:
