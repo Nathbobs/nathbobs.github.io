@@ -23,7 +23,7 @@ page_data:
           type: id_flutter
           color: "black"
         - title: "3D & Computer Vision"
-          type: id_3D
+          type: id_3d
           color: "gray"
         - title: "Agentic AI"
           type: id_agents
@@ -79,7 +79,7 @@ page_data:
 
           # Agentic AI
         - type: id_agents
-          project_name: "StartAI"
+          project_name: "StartupAI"
           project_excerpt: "AI-Powered Business Analysis Agent"
           img: ":cg_project1.png"
           img_title: "basic opengl viewer"
