@@ -22,12 +22,12 @@ page_data:
         - title: "Flutter"
           type: id_flutter
           color: "black"
-        - title: "3D & AI"
-          type: id_csharp
+        - title: "3D & Computer Vision"
+          type: id_3D
           color: "gray"
-        # - title: "Java"
-        #   type: id_java
-        #   color: "#27374D"
+        - title: "Agentic AI"
+          type: id_agents
+          color: "#27374D"
 
     list:
           # python
@@ -36,20 +36,62 @@ page_data:
           project_excerpt: "RESTful API integration"
           img: ":cg_project1.png"
           img_title: "basic opengl viewer"
-          date: "2023-04-03"
+          date: "2025-07-21"
           post: |
               ## [Kraken Crypto Exchange Project : RESTful API integration - Link](https://github.com/Nathbobs/Computer_Networks/tree/main/Assignment_2)
 
-              > 
-              ●	Implemented API authentication and HTTP communication with Kraken cryptocurrency exchange using RESTful in Python and Go.
+              > ●	Implemented API authentication and HTTP communication with Kraken cryptocurrency exchange using RESTful in Python and Go.
               ●	Developed scripts to retrieve account balances, place sell orders with secure server authentication and measure API response time
               ●	**Technologies:** Python, RESTful APIs, HTTP, JSON, Network Protocols, Cryptography
-              
-              # 1. **Orbit**: Rotate the camera around the target point by changing azimuth / elevation angles. (MMB (mouse middle button) in Blender)
-              # 2. **Pan**: Move both the target point and camera in left, right, up and down direction of the camera. (Shift-MMB in Blender)
-              # 3. **Zoom**: Move the camera forward toward the target point (zoom in) and backward away from the target point. (zoom out) (Ctrl-MMB in Blender)
-              # 4. Toggle **perspective projection / orthogonal projection** by pressing ‘v’ key.
-              # 5. Draw a **rectangular grid** with lines (not polygons) on xz plane as a reference ground plane. (like Blender)  
+          
+          # 3D & Computer Vision
+        - type: id_3d
+          project_name: "3D Scene Reconstruction from multiple Images - Graduation Project "
+          project_excerpt: "3D Scene Reconstruction from multiple Images (NeRF and 3D Gaussian Splatting) "
+          img: ":cg_project1.png"
+          img_title: "basic opengl viewer"
+          date: "2025-03-01"
+          post: |
+              ## [Graduation Project :  - Link](https://github.com/Nathbobs/Graduation_Capstone)
+
+              > ●  Built a 3D reconstruction pipeline using NeRF, capturing scenes and rendering 3D outputs from multi-view images.
+              ●  Collected and processed real datasets, and customized camera path generation for dynamic video renders using spiral and interpolation techniques.
+              ●  Fixed compatibility issues to enable full pipeline execution on Google Colab with GPU acceleration.
+              ●  **Technologies**: NeRF, Nerfstudio, Python, PyTorch, Colab, 3D Gaussian Splatting, OpenCV, CUDA
+
+         
+         # 3D & Computer Vision
+        - type: id_3d
+          project_name: "Sign Language Detection"
+          project_excerpt: "Sign Language Detection - Computer Vision "
+          img: ":cg_project1.png"
+          img_title: "basic opengl viewer"
+          date: "2024-07-21"
+          post: |
+              ## [Sign Language Detection (Personal Project) - Link](https://github.com/Nathbobs/CV_Projects/tree/main/signLanguage_Project)
+
+              > ●	Implemented a hand landmark detection system using MediaPipe to track sign language gestures for real-time recognition.
+              ●	Built a custom sign gesture classification model using a Random Forest Classifier, trained on a hand-collected dataset.
+              ●	Utilized OpenCV to extract and preprocess hand gestures from live video streams.
+              ●	Constructed a custom dataset for model training and validation, capturing diverse sign language samples.
+              ●	Successfully implemented real-time landmark tracking; ongoing efforts focused on improving gesture prediction accuracy and model performance.
+        
+
+          # Agentic AI
+        - type: id_agents
+          project_name: "StartAI"
+          project_excerpt: "AI-Powered Business Analysis Agent"
+          img: ":cg_project1.png"
+          img_title: "basic opengl viewer"
+          date: "2025-07-21"
+          post: |
+              ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
+
+              > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
+              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
+              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+
+
         # # python
         # - type: id_python
         #   project_name: "Computer Graphics Project 01"
@@ -97,155 +139,155 @@ page_data:
         #         - Render all object using Phong Illumination and Phong shading.
         #         - Toggle wireframe / solid mode by pressing ‘z’ key. (similar to pressing ‘z’ key in Blender)
 
-        # C
-        - type: id_c
-          project_name: "Computer Architecture Project 01"
-          project_excerpt: "LC-2K Assembly Language and Assembler & Behavioral Simulator & Assembly-Language Multiplication"
-          img: ":ca_project1.png"
-          img_title: "assembly language multiplication"
-          date: "2023-04-14"
-          post: |
-              ##### [LC-2K Assembly Language and Assembler & Behavioral Simulator & Assembly-Language Multiplication](https://github.com/najiyeon/ITE2031_Computer_Architecture#lc-2k-instruction-set-architecture)
+        # # C
+        # - type: id_c
+        #   project_name: "Computer Architecture Project 01"
+        #   project_excerpt: "LC-2K Assembly Language and Assembler & Behavioral Simulator & Assembly-Language Multiplication"
+        #   img: ":ca_project1.png"
+        #   img_title: "assembly language multiplication"
+        #   date: "2023-04-14"
+        #   post: |
+        #       ##### [LC-2K Assembly Language and Assembler & Behavioral Simulator & Assembly-Language Multiplication](https://github.com/najiyeon/ITE2031_Computer_Architecture#lc-2k-instruction-set-architecture)
 
-              This project is intended to help understand the instructions of a very simple assembly language and how to assemble programs into machine language.
+        #       This project is intended to help understand the instructions of a very simple assembly language and how to assemble programs into machine language.
 
-              > **1. LC-2K Assembly Language and Assembler**
-                - The first part of this project is to write a program to take an assembly-language program and translate it into machine language.
+        #       > **1. LC-2K Assembly Language and Assembler**
+        #         - The first part of this project is to write a program to take an assembly-language program and translate it into machine language.
 
-              > **2. Behavioral Simulator**
-                - The second part of this assignment is to write a program that can simulate any legal LC-2K machine-code program.
+        #       > **2. Behavioral Simulator**
+        #         - The second part of this assignment is to write a program that can simulate any legal LC-2K machine-code program.
 
-              > **3. Assembly-Language Multiplication**
-                - The third part of this assignment is to write an assembly-language program to multiply two numbers.
+        #       > **3. Assembly-Language Multiplication**
+        #         - The third part of this assignment is to write an assembly-language program to multiply two numbers.
 
-        # C
-        - type: id_c
-          project_name: "Operating System Project 01"
-          project_excerpt: "Implement simple scheduler on xv6"
-          img: ":os_project1.png"
-          img_title: "scheduler overview"
-          date: "2023-04-23"
-          post: |
-              #### Project 01 : Implement simple scheduler on xv6
+        # # C
+        # - type: id_c
+        #   project_name: "Operating System Project 01"
+        #   project_excerpt: "Implement simple scheduler on xv6"
+        #   img: ":os_project1.png"
+        #   img_title: "scheduler overview"
+        #   date: "2023-04-23"
+        #   post: |
+        #       #### Project 01 : Implement simple scheduler on xv6
 
-              [**project 1 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project01/xv6-public)
+        #       [**project 1 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project01/xv6-public)
 
-              [**project 1 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-01)
+        #       [**project 1 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-01)
 
-        # C
-        - type: id_c
-          project_name: "Operating System Project 02"
-          project_excerpt: "Process Management & LWP"
-          img: ":os_project2.png"
-          img_title: "process management : memlim"
-          date: "2023-05-28"
-          post: |
-              #### Project 02 : Process Management & LWP
+        # # C
+        # - type: id_c
+        #   project_name: "Operating System Project 02"
+        #   project_excerpt: "Process Management & LWP"
+        #   img: ":os_project2.png"
+        #   img_title: "process management : memlim"
+        #   date: "2023-05-28"
+        #   post: |
+        #       #### Project 02 : Process Management & LWP
 
-              [**project 2 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project02/xv6-public)
+        #       [**project 2 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project02/xv6-public)
 
-              [**project 2 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-02)
+        #       [**project 2 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-02)
 
-        # C
-        - type: id_c
-          project_name: "Operating System Project 03"
-          project_excerpt: "File system"
-          img: ":os_project3.png"
-          img_title: "triple indirect"
-          date: "2023-06-16"
-          post: |
-              #### Project 03 : File system
+        # # C
+        # - type: id_c
+        #   project_name: "Operating System Project 03"
+        #   project_excerpt: "File system"
+        #   img: ":os_project3.png"
+        #   img_title: "triple indirect"
+        #   date: "2023-06-16"
+        #   post: |
+        #       #### Project 03 : File system
 
-              [**project 3 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project03/xv6-public)
+        #       [**project 3 code**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project03/xv6-public)
 
-              [**project 3 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-03)
+        #       [**project 3 wiki**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-03)
 
-        # C
-        - type: id_c
-          project_name: "Compilers Project 01"
-          project_excerpt: "Scanner"
-          img: ":com_project1.png"
-          img_title: "compilers project 1"
-          date: "2023-10-16"
-          post: |
-              #### Project 01 : Scanner
+        # # C
+        # - type: id_c
+        #   project_name: "Compilers Project 01"
+        #   project_excerpt: "Scanner"
+        #   img: ":com_project1.png"
+        #   img_title: "compilers project 1"
+        #   date: "2023-10-16"
+        #   post: |
+        #       #### Project 01 : Scanner
 
-              [**project 1 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/1_Scanner)
+        #       [**project 1 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/1_Scanner)
 
-              [**project 1 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%231-Report)
+        #       [**project 1 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%231-Report)
 
-        # C
-        - type: id_c
-          project_name: "Compilers Project 02"
-          project_excerpt: "Parser"
-          img: ":com_project2.png"
-          img_title: "compilers project 2"
-          date: "2023-11-27"
-          post: |
-              #### Project 02 : Parser
+        # # C
+        # - type: id_c
+        #   project_name: "Compilers Project 02"
+        #   project_excerpt: "Parser"
+        #   img: ":com_project2.png"
+        #   img_title: "compilers project 2"
+        #   date: "2023-11-27"
+        #   post: |
+        #       #### Project 02 : Parser
 
-              [**project 2 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/2_Parser)
+        #       [**project 2 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/2_Parser)
 
-              [**project 2 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%232-Report)
+        #       [**project 2 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%232-Report)
 
-        # C
-        - type: id_c
-          project_name: "Compilers Project 03"
-          project_excerpt: "Semantic"
-          img: ":com_project3.png"
-          img_title: "compilers project 3"
-          date: "2023-12-19"
-          post: |
-              #### Project 03 : Semantic
+        # # C
+        # - type: id_c
+        #   project_name: "Compilers Project 03"
+        #   project_excerpt: "Semantic"
+        #   img: ":com_project3.png"
+        #   img_title: "compilers project 3"
+        #   date: "2023-12-19"
+        #   post: |
+        #       #### Project 03 : Semantic
 
-              [**project 3 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/3_Semantic)
+        #       [**project 3 code**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/3_Semantic)
 
-              [**project 3 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%233-Report)
+        #       [**project 3 wiki**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%233-Report)
 
-        # Flutter
-        - type: id_flutter
-          project_name: "InfoSynth"
-          project_excerpt: "An app crafted using Flutter (Dart), Node"
-          img: ":InfoSynth.png"
-          img_title: "InfoSynth"
-          date: "2024-01-04"
-          post: |
-              #### InfoSynth
+        # # Flutter
+        # - type: id_flutter
+        #   project_name: "InfoSynth"
+        #   project_excerpt: "An app crafted using Flutter (Dart), Node"
+        #   img: ":InfoSynth.png"
+        #   img_title: "InfoSynth"
+        #   date: "2024-01-04"
+        #   post: |
+        #       #### InfoSynth
 
-              > **App Overview**
-                - InfoSynth is an application designed to assist users who have been exposed to biased or limited information in acquiring objective and diverse perspectives. Operating primarily based on YouTube videos, users can input the URL of a YouTube video, and the app will crawl the script of the video to provide related articles.
+        #       > **App Overview**
+        #         - InfoSynth is an application designed to assist users who have been exposed to biased or limited information in acquiring objective and diverse perspectives. Operating primarily based on YouTube videos, users can input the URL of a YouTube video, and the app will crawl the script of the video to provide related articles.
 
-              [**InfoSynth source code**](https://github.com/InfoSynth/InfoSynth)
+        #       [**InfoSynth source code**](https://github.com/InfoSynth/InfoSynth)
 
-        # Flutter
-        - type: id_flutter
-          project_name: "MO HAJI"
-          project_excerpt: "An app developed utilizing Flutter (Dart), Node.js, MySQL, AWS EC2, and S3, along with Google Vision API, OpenAI API, and Naver Search API."
-          img: ":MOHAJI.png"
-          img_title: "MO-HAJI"
-          date: "2024-01-11"
-          post: |
-              #### MO HAJI
+        # # Flutter
+        # - type: id_flutter
+        #   project_name: "MO HAJI"
+        #   project_excerpt: "An app developed utilizing Flutter (Dart), Node.js, MySQL, AWS EC2, and S3, along with Google Vision API, OpenAI API, and Naver Search API."
+        #   img: ":MOHAJI.png"
+        #   img_title: "MO-HAJI"
+        #   date: "2024-01-11"
+        #   post: |
+        #       #### MO HAJI
 
-              > **App Overview**
-                - MO HAJI is an application that provides recipe, allergy information, and nearby restaurant recommendations with just one food photo.
+        #       > **App Overview**
+        #         - MO HAJI is an application that provides recipe, allergy information, and nearby restaurant recommendations with just one food photo.
 
-              [**MO-HAJI source code**](https://github.com/MO-HAJI/MO-HAJI)
+        #       [**MO-HAJI source code**](https://github.com/MO-HAJI/MO-HAJI)
 
-        # C#
-        - type: id_csharp
-          project_name: "After School; 3D choorigame"
-          project_excerpt: "An app crafted using Unity (C#)"
-          img: ":choorigame.png"
-          img_title: "choorigame"
-          date: "2024-01-18"
-          post: |
-              #### After School; 3D choorigame
+        # # C#
+        # - type: id_csharp
+        #   project_name: "After School; 3D choorigame"
+        #   project_excerpt: "An app crafted using Unity (C#)"
+        #   img: ":choorigame.png"
+        #   img_title: "choorigame"
+        #   date: "2024-01-18"
+        #   post: |
+        #       #### After School; 3D choorigame
 
-              > **App Overview**
-                - "After School; 3D Mystery Game" is a 3D mystery game implemented in Unity, based on the debut work "After School" by the famous Japanese novelist Keigo Higashino. Acquire clues to uncover the secrets of the locked room and find the culprit!
+        #       > **App Overview**
+        #         - "After School; 3D Mystery Game" is a 3D mystery game implemented in Unity, based on the debut work "After School" by the famous Japanese novelist Keigo Higashino. Acquire clues to uncover the secrets of the locked room and find the culprit!
 
-              [**After-School source code**](https://github.com/After-School-2023/After_School)
+        #       [**After-School source code**](https://github.com/After-School-2023/After_School)
 
         # # Java
         # - type: id_java
