@@ -15,15 +15,15 @@ page_data:
         - title: "Python"
           type: id_python
           color: "gray"
-        - title: "C"
+        - title: "C & C++"
           type: id_c
           color: "#27374D"
         - title: "Flutter"
           type: id_flutter
           color: "black"
-        # - title: "C#"
-        #   type: id_csharp
-        #   color: "gray"
+        - title: " 3D & AI"
+          type: id_csharp
+          color: "gray"
 
     list:
         # 파이썬

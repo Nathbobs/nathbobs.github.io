@@ -16,66 +16,86 @@ page_data:
         - title: "Python"
           type: id_python
           color: "gray"
-        - title: "C"
+        - title: "C & C++"
           type: id_c
           color: "#27374D"
         - title: "Flutter"
           type: id_flutter
           color: "black"
-        # - title: "CSharp"
-        #   type: id_csharp
-        #   color: "gray"
+        - title: "3D & AI"
+          type: id_csharp
+          color: "gray"
         # - title: "Java"
         #   type: id_java
         #   color: "#27374D"
 
     list:
-        # python
+          # python
         - type: id_python
-          project_name: "Computer Graphics Project 01"
-          project_excerpt: "Basic OpenGL viewer"
+          project_name: "Kraken Cryptocurrency Exchange Project"
+          project_excerpt: "RESTful API integration"
           img: ":cg_project1.png"
           img_title: "basic opengl viewer"
           date: "2023-04-03"
           post: |
-              ## [Project 01 : Basic OpenGL viewer](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project1/main.py)
+              ## [Kraken Crypto Exchange Project : RESTful API integration - Link](https://github.com/Nathbobs/Computer_Networks/tree/main/Assignment_2)
 
-              #### Manipulate the camera with mouse movement
+              > 
+              ●	Implemented API authentication and HTTP communication with Kraken cryptocurrency exchange using RESTful in Python and Go.
+              ●	Developed scripts to retrieve account balances, place sell orders with secure server authentication and measure API response time
+              ●	**Technologies:** Python, RESTful APIs, HTTP, JSON, Network Protocols, Cryptography
+              
+              # 1. **Orbit**: Rotate the camera around the target point by changing azimuth / elevation angles. (MMB (mouse middle button) in Blender)
+              # 2. **Pan**: Move both the target point and camera in left, right, up and down direction of the camera. (Shift-MMB in Blender)
+              # 3. **Zoom**: Move the camera forward toward the target point (zoom in) and backward away from the target point. (zoom out) (Ctrl-MMB in Blender)
+              # 4. Toggle **perspective projection / orthogonal projection** by pressing ‘v’ key.
+              # 5. Draw a **rectangular grid** with lines (not polygons) on xz plane as a reference ground plane. (like Blender)  
+        # # python
+        # - type: id_python
+        #   project_name: "Computer Graphics Project 01"
+        #   project_excerpt: "Basic OpenGL viewer"
+        #   img: ":cg_project1.png"
+        #   img_title: "basic opengl viewer"
+        #   date: "2023-04-03"
+        #   post: |
+        #       ## [Project 01 : Basic OpenGL viewer](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project1/main.py)
 
-              > 1. **Orbit**: Rotate the camera around the target point by changing azimuth / elevation angles. (MMB (mouse middle button) in Blender)
-              2. **Pan**: Move both the target point and camera in left, right, up and down direction of the camera. (Shift-MMB in Blender)
-              3. **Zoom**: Move the camera forward toward the target point (zoom in) and backward away from the target point. (zoom out) (Ctrl-MMB in Blender)
-              4. Toggle **perspective projection / orthogonal projection** by pressing ‘v’ key.
-              5. Draw a **rectangular grid** with lines (not polygons) on xz plane as a reference ground plane. (like Blender)
+        #       #### Manipulate the camera with mouse movement
 
-        # python
-        - type: id_python
-          project_name: "Computer Graphics Project 02"
-          project_excerpt: "Obj viewer & drawing a hierarchical model"
-          img: ":cg_project2.png"
-          img_title: "hierarchical model"
-          date: "2023-04-17"
-          post: |
-              ## [Project 02 : Obj viewer & drawing a hierarchical model](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project2/main.py)
+        #       > 1. **Orbit**: Rotate the camera around the target point by changing azimuth / elevation angles. (MMB (mouse middle button) in Blender)
+        #       2. **Pan**: Move both the target point and camera in left, right, up and down direction of the camera. (Shift-MMB in Blender)
+        #       3. **Zoom**: Move the camera forward toward the target point (zoom in) and backward away from the target point. (zoom out) (Ctrl-MMB in Blender)
+        #       4. Toggle **perspective projection / orthogonal projection** by pressing ‘v’ key.
+        #       5. Draw a **rectangular grid** with lines (not polygons) on xz plane as a reference ground plane. (like Blender)
 
-              #### Implement my own obj file viewer 
+        # # python
+        # - type: id_python
+        #   project_name: "Computer Graphics Project 02"
+        #   project_excerpt: "Obj viewer & drawing a hierarchical model"
+        #   img: ":cg_project2.png"
+        #   img_title: "hierarchical model"
+        #   date: "2023-04-17"
+        #   post: |
+        #       ## [Project 02 : Obj viewer & drawing a hierarchical model](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project2/main.py)
 
-              _1) showing a single loaded obj mesh and  2) showing an animation of a hierarchical model consisting of loaded obj meshes. The multiple light sources should be used for rendering._
+        #       #### Implement my own obj file viewer 
 
-              > **1. Single mesh rendering mode**
-                - Open an obj file by drag-and-drop to your obj viewer window.
-                - Read the obj file and display the mesh only using vertex positions, vertex normals, faces information.
-                - When open an obj file, print out the following information of the obj file to stdout. (terminal)
+        #       _1) showing a single loaded obj mesh and  2) showing an animation of a hierarchical model consisting of loaded obj meshes. The multiple light sources should be used for rendering._
 
-              > **2. Animating hierarchical model rendering mode**
-                - When a user presses a key ‘h’ on your viewer, your program should run in “animating hierarchical model rendering mode”.
-                - The model should consist of at least 3 different meshes loaded from 3 different downloaded obj files.
-                - The model should have a hierarchy of 3 levels and each node (except leaf nodes) should have at least 2 child nodes.
-                - Animate the model to show the hierarchical structure.
+        #       > **1. Single mesh rendering mode**
+        #         - Open an obj file by drag-and-drop to your obj viewer window.
+        #         - Read the obj file and display the mesh only using vertex positions, vertex normals, faces information.
+        #         - When open an obj file, print out the following information of the obj file to stdout. (terminal)
 
-              > **3. Lighting & Etc**
-                - Render all object using Phong Illumination and Phong shading.
-                - Toggle wireframe / solid mode by pressing ‘z’ key. (similar to pressing ‘z’ key in Blender)
+        #       > **2. Animating hierarchical model rendering mode**
+        #         - When a user presses a key ‘h’ on your viewer, your program should run in “animating hierarchical model rendering mode”.
+        #         - The model should consist of at least 3 different meshes loaded from 3 different downloaded obj files.
+        #         - The model should have a hierarchy of 3 levels and each node (except leaf nodes) should have at least 2 child nodes.
+        #         - Animate the model to show the hierarchical structure.
+
+        #       > **3. Lighting & Etc**
+        #         - Render all object using Phong Illumination and Phong shading.
+        #         - Toggle wireframe / solid mode by pressing ‘z’ key. (similar to pressing ‘z’ key in Blender)
 
         # C
         - type: id_c
@@ -227,14 +247,14 @@ page_data:
 
               [**After-School source code**](https://github.com/After-School-2023/After_School)
 
-        # Java
-        - type: id_java
-          project_name: "Blueboard"
-          project_excerpt: "An online educational platform application developed in Java."
-          img: ":blueboard.png"
-          img_title: "Blueboard"
-          date: "2023-09-24"
-          post: |
-              #### Blueboard
+        # # Java
+        # - type: id_java
+        #   project_name: "Blueboard"
+        #   project_excerpt: "An online educational platform application developed in Java."
+        #   img: ":blueboard.png"
+        #   img_title: "Blueboard"
+        #   date: "2023-09-24"
+        #   post: |
+        #       #### Blueboard
 
-              [**Blueboard source code**](https://github.com/najiyeon/Blueboard)
+        #       [**Blueboard source code**](https://github.com/najiyeon/Blueboard)
