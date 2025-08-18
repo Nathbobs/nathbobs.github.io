@@ -1,11 +1,11 @@
 # 소유자 개인 정보
-brand: "나타니엘입니다"
+brand: "Jiyeon Na"
 
 # 브랜드 이름 아래의 텍스트
 brand_sub_text: "$site_intro"
 
 # seo meta에서 게시물 작성자로 사용됨 (게시물 내에서 정의되지 않은 경우)
-name: "나타니엘입니다"
+name: "Jiyeon Na"
 
 # 홈 페이지 상단 헤더 텍스트
 home:
@@ -20,7 +20,7 @@ about:
 
 # 저작권 연도를 추가하지 않으려면 주석 처리하거나 비워두세요.
 # 작업에 대한 저작권을 처음 주장한 연도입니다.
-copyright_start_year: "2025"
+copyright_start_year: "2023"
 
 # creative_commons.enable이 _data/conf/main.yml에 true로 설정되어 있는지 확인하세요.
 creative_commons:
@@ -39,18 +39,18 @@ creative_commons:
 # seo meta 공통 설명 (각 언어에 필요)
 # front matter에 meta_description이 정의되지 않은 경우 콘텐츠에서 생성됩니다.
 # 콘텐츠가 없는 경우 이 설명이 페이지 설명으로 사용됩니다. manifest.json에도 사용됩니다.
-meta_common_description: "나타니엘의 개인 포트폴리오 웹사이트입니다. 컴퓨터 소프트웨어 엔지니어링을 전공하고 있으며 백엔드 개발자로 성장하기 위해 노력하고 있습니다."
+meta_common_description: "나지연의 개인 포트폴리오 웹사이트입니다. 컴퓨터 소프트웨어 엔지니어링을 전공하고 있으며 백엔드 개발자로 성장하기 위해 노력하고 있습니다."
 
 # 연락처 옵션 (사이드 네비게이션 하단 및 소개 페이지)
 # 항목 순서대로 표시됩니다. 연락처 항목을 제거하려면 주석 처리하세요.
 contacts:
-  - github: "nathbobs"
-  - email: "nathbobs@hanyang.ac.kr"
-  - linkedin: "abegundenathaniel"
+  - github: "najiyeon"
+  - email: "skwldus@hanyang.ac.kr"
+  #- linkedin: ""
   #- twitter: ""
   #- mastodon: ""
-  - instagram: "nathbobz"
-  - youtube: "@nathbobs"
+  - instagram: "o2o1o5"
+  - youtube: "@user-qq3ji6vk8y"
   #- facebook: ""
 # 추가하려면 _data/const/contact.yml 파일을 확인하세요.
 #  - your_new_contact: ""

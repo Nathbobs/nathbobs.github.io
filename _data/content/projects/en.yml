@@ -16,12 +16,15 @@ page_data:
         - title: "Python"
           type: id_python
           color: "gray"
-        - title: "C & C++"
+        - title: "C"
           type: id_c
           color: "#27374D"
         - title: "Flutter"
           type: id_flutter
           color: "black"
+        - title: "CSharp"
+          type: id_csharp
+          color: "gray"
         - title: "Java"
           type: id_java
           color: "#27374D"
