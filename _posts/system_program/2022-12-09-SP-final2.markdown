@@ -1,0 +1,383 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_final2
+title: "System Programming Ch9 - Ch10"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, FINAL]
+# thumbnail image for post
+img: ":sp/post_pic_sp_final2_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-12-09 16:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_9
+
+## Sessions
+
+시스템프로그래밍에서의 ***session***은?
+
+→ 하나 또는 그 이상의 프로세스 그룹
+
+<br>
+
+## Controlling Terminal
+
+![controlling terminal](:sp/post_pic_sp_final2_1.png){:width="700px"}
+
+
+
+- ***session leader*** : 다른말로 ***login shell 또는 controlling process***
+    - 어떤 서버에 접속하여 연결성을 가지게 됨 → ***session***
+    - terminal을 통해서 명령어를 치고, 코딩을 할 수 있게 됨 (login shell을 통해서)
+        
+        → login shell이 session을 유지하는 것이면서도, session leader가 되는 것
+        
+    - 접속한 터미널을 통해 process 1부터 5까지를 다 다룰 수 있게됨(프로세스를 만들어낼수도, 지울수도, 멈출수도,.. 권한이 있다면)
+
+- ***controlling terminal*** : pts 또는 tty라고 함, 즉 접속했을 때 부여받는 이 shell을 제어하는 서버에서 부여한 어떤값
+    - controlling terminal에서 hang-up signal을 주면 session leader로 가고,
+    - terminal input and terminal-generated signals를 주면 foreground process group으로 감
+
+- ***hang-up signal*** : 사용자가 잠깐 멈추라고 주는 명령어, session leader가 반응하게 됨
+- ***terminal input and terminal-generated signals*** : 인터럽트
+
+- ***foreground 와 background의 차이***
+    - background : &을 붙이면 백그라운드로 동작, 터미널을 표현해주지 않고 알아서 돌림, shell의 권한을 내어주지 않으면서 동작, 프로세스를 돌려놓고 다른일을 할 수 있음
+    - foreground : &을 붙이지 않으면 포그라운드로 동작, 사용자에게 보여줌, shell의 권한을 뺏김, 포그라운드로 도는 프로세스는 끝날때까지 다른 일을 할 수 없음
+
+<br>
+
+# 💡 Chap_10
+
+## Interrupted System Calls
+
+ ***Automatic restarting***
+
+- nioctl, read, readv, write, writev, wait, and waitpid … 이런 함수들은 아주 느린 슬로우시스템콜 함수들이다. (slowsc)
+- 그런데 얘네가 모종의 이유로 멈추었을 때 영원히 블록될 수 있음, 그러면 프로그램을 그냥 꺼야됨, 근데 그냥 끌수는 없고 복구를 해야됨
+- 이 복구를 자동적으로 해주는게 ***automatic restarting***
+- 슬로우시스템콜 함수에서 인터럽트 발생했을때, 무한블록을 해소하기 위해 자동으로 재실행 해주는 것.
+
+<br>
+
+## *kill* and *raise* Fuction
+
+- ***kill*** : 프로세스를 죽이는(없애는, 제거하는, 지우는) 함수
+- ***raise*** : 나 자신 프로세스에게 시그널을 넘겨주는 함수
+
+```c
+#include <signal.h>
+int kill(pid_t pid, int signo)
+int raise(int signo);
+```
+
+- kill 하면 어떤 프로세스를 죽일지 pid(process number)를 넘겨주게 되어있음, 근데 raise는 프로세스 아이디를 넘겨주지 않음, 그 이유는 나 자신에게 보내는 것이기 때문임
+
+<br>
+
+## *alarm* and *pause* Function (시험문제 나올거임)
+
+ (아래 코드는 모든 라인 다 이해해야됨)
+
+```c
+#include  <signal.h>
+#include  <unistd.h>
+
+static void
+sig_alrm(int signo)
+{
+  /* nothing to do, just return to wake up the pause */
+}
+
+unsigned int
+sleep1(unsigned int nsecs)
+{
+  if (signal(SIGALRM, sig_alrm) == SIG_ERR) //SIGALARM이 발생하면 두번째 인자, sig_alrm을 실행시켜주라는 의미
+  return(nsecs);
+  alarm(nsecs);  /* start the timer */
+  pause();  /* next caught signal wakes us up */
+  return(alarm(0));  /* turn off timer, return unslept time */
+}
+```
+
+**\<이 코드가 정상적으로 동작할 경우\>**
+
+- `signal(SIGALRM, sig_alrm)` 은 ***SIGALARM***(실제로 시스템이 내뱉은 시그널)이 발생하면 두번째 인자, ***sig_alrm***을 실행시켜주라는 의미
+- 근데 실행이 안되고 에러가 나면 리턴함
+- ***alarm*** : SIGALRM을 만들어줌, 인자인 nsecs는 진짜 초, 인자로 넘어온 수가 2면 2초뒤에 알람 함수 수행, 시그널 발생, 2초가 되기 전에는 계속 다음라인 실행해감
+    
+    alarm은 인자로 들어온 초 시간 이후에 SIGALARM을 발생시키는 함수
+    
+- ***pause*** : 시그널이 뭐든간에 시그널이 발생할 때까지 기다리라는 함수, 2초가 될 때까지 pause에서 기다리다가 signal함수 동작해서 sig_alrm 호출해서 수행, 그러고 다시 돌아옴
+    - 그 뒤로는 alarm과 pause는 한번 수행되었으므로 그냥 지나감 (alarm 0됨, 더이상 동작하지 않음)
+
+**\<race condition\>**
+
+`alarm(nsecs);` 에서 race condition 발생
+
+- scheduling이 꼬여서 pause를 만나기 전에 알람이 끝날 경우,
+- 무한 블록에 걸려서 pause에 잡혀있게됨
+- 그래서 이건 많은 양을 처리하는 프로그램에서는 이렇듯 블록이 발생해서 쓸 수 없음
+
+<br>
+
+위와 같은 문제를 해결하기 위한 코드
+
+```c
+#include  <setjmp.h>
+#include  <signal.h>
+#include  <unistd.h>
+
+static jmp_buf  env_alrm;
+
+static void
+sig_alrm(int signo)
+{
+  longjmp(env_alrm, 1);
+}
+
+unsigned int
+sleep2(unsigned int nsecs)
+{
+  if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+  return(nsecs);
+  if (setjmp(env_alrm) == 0) { //알람을 setjmp안에다가 넣어줌
+  alarm(nsecs);  /* start the timer */
+  pause();  /* next caught signal wakes us up */
+  }
+  return(alarm(0));  /* turn off timer, return unslept time */
+}
+```
+
+- setjmp를 걸고 알람이 돌게됨
+- 그러면 sig_alrm이 실행되었을 때 longjmp만나고, 1을 반환하게 되니까 if문에 안걸림, 즉 문제 해결
+- 알람을 통해서 발생하는 racecondition은 이렇게 setjmp와 longjmp로 해소 가능
+
+<br>
+
+(아래 코드는 위의 alarm과 pause에서 발생하는 race condition과 동일함)
+
+```c
+static void  sig_alrm(int);
+
+int main(void)
+{
+  int  n;
+  char  line[MAXLINE];
+
+  if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+  err_sys("signal(SIGALRM) error");
+
+  alarm(10);
+  if ((n = read(STDIN_FILENO, line, MAXLINE)) < 0)
+  err_sys("read error");
+  alarm(0);
+
+  write(STDOUT_FILENO, line, n);
+  exit(0);
+}
+
+static void sig_alrm(int signo)
+{
+  /* nothing to do, just return to interrupt the read */
+}
+```
+
+**\<race condition 발생\>**
+
+- `alarm(10);` 걸리고 10초동안 뒤의 코드가 실행되길 기대함, 그런데 서버에서 처리해야될 일이 너무 많을 경우(컴퓨터가 개구리다는 가정), read를 수행 못하고 알람이 끝나버리는 경우
+- read를 만나기도 전에 인터럽트가 걸렸다 왔더니 수행이 안되고 무한대기를 해버림, 무한블록(read의 특성)
+- read는 사용자의 키보드 입력을 받을 때까지 기다리는 것, 그런데 알람을 갔다가 인터럽트가 걸리면 read함수는 더이상 동작 X, 계속 기다림(블록 상태)
+- read가 블록인 상태를 꺼내주거나 read를 한번 더 수행해줘야함
+
+<br>
+
+위의 상황을 longjmp, setjmp로 해결한 코드
+
+```c
+static void  sig_alrm(int);
+static jmp_buf  env_alrm;
+
+int main(void)
+{
+  int  n;
+  char  line[MAXLINE];
+
+  if (signal(SIGALRM, sig_alrm) == SIG_ERR)
+  err_sys("signal(SIGALRM) error");
+  if (setjmp(env_alrm) != 0)
+  err_quit("read timeout");
+
+  alarm(10);
+  if ((n = read(STDIN_FILENO, line, MAXLINE)) < 0)
+  err_sys("read error");
+  alarm(0);
+
+  write(STDOUT_FILENO, line, n);
+  exit(0);
+}
+
+static void sig_alrm(int signo)
+{
+  longjmp(env_alrm, 1);
+}
+```
+
+- alarm 세팅은 똑같은데 setjmp를 걸어줌
+- alarm 끝나면 sig_alrm 실행, setjmp로 점프하는데 반환값 1,
+- 그러면 if문에 걸려서 `err_quit("read timeout");` 발생
+
+<br>
+
+## *sigpending* Function (코드 암기)
+
+
+```c
+static void sig_quit(int signo) //이함수를 이해할 필요는 X
+{
+   printf("caught SIGQUIT\n");
+   if (signal(SIGQUIT, SIG_DFL) == SIG_ERR)
+  err_sys("can't reset SIGQUIT");
+}
+```
+
+```c
+int main(void)
+{
+  sigset_t  newmask, oldmask, pendmask;
+
+  if (signal(SIGQUIT, sig_quit) == SIG_ERR) //SIGQUIT가 발생하면 sig_quit실행
+	  err_sys("can't catch SIGQUIT");
+
+  /*
+   * Block SIGQUIT and save current signal mask.
+   */
+  sigemptyset(&newmask);
+  sigaddset(&newmask, SIGQUIT);
+  if (sigprocmask(SIG_BLOCK, &newmask, &oldmask) < 0)
+	  err_sys("SIG_BLOCK error");
+
+  sleep(5);  /* SIGQUIT here will remain pending */
+
+  if (sigpending(&pendmask) < 0)
+	  err_sys("sigpending error");
+  if (sigismember(&pendmask, SIGQUIT))
+	  printf("\nSIGQUIT pending\n");
+
+  /*
+   * Reset signal mask which unblocks SIGQUIT.
+   */
+  if (sigprocmask(SIG_SETMASK, &oldmask, NULL) < 0)
+	  err_sys("SIG_SETMASK error");
+  printf("SIGQUIT unblocked\n");
+
+  sleep(5);  /* SIGQUIT here will terminate with core file */
+  exit(0);
+}
+```
+
+- `sigset_t  newmask, oldmask, pendmask;` : sigset_t는 자료형인데 시그널을 저장하기 위한 바구니임 (set니까),
+    
+    시그널의 종류는 굉장히 많음 그것들을 담을 수 있도록 만들어진 자료형임
+    
+- ***SIGQUIT*** : control + \ (멈추는 것)
+- `sigemptyset(&newmask);` :
+    - `char arr[100] = {0,}` 이런 역할
+    - newmask를 싹 초기화 해줌, 아무것도 담지 않은 바구니로 만들어줌
+    - 인자로 들어온 애를 아무것도 담지 않은 걸로 만들어줌
+- `sigaddset(&newmask, SIGQUIT);` :
+    - signal을 set에 더해주는 함수
+    - newmask라는 sigset에 SIGQUIT라는 시그널을 더해줌
+- `if (sigprocmask(SIG_BLOCK, &newmask, &oldmask) < 0)` :
+    - newmask에 있는 시그널을 발생해도 블록시켜, 즉 무시하라는 뜻
+    - oldmask는 이전에도 블록할 시그널들이 있었을 수도 있음, 이전에 있던 블록 리스트들을 oldmask에다가 저장해놓는 것, 복원이 필요할 수 있기 때문에
+
+- `if (sigpending(&pendmask) < 0)` : 지금 블록 리스트에 뭐가 있는지,
+    - 인자로 들어있는 pendmask에다가 지금 블록된 시그널을 넣어줌
+- `if (sigismember(&pendmask, SIGQUIT))` : 첫번째 인자로 들어간 pendmask에 SIGQUIT가 있느냐를 물어보는 것
+
+→ sigpending과 sigismember는 그냥 확인하는 함수들, 굳이 없어도 됨
+
+*(여기까지 SIGQUIT 블록하는 코드)*
+
+---
+
+- `if (sigprocmask(SIG_SETMASK, &oldmask, NULL) < 0)` : 원래 block list로 원복
+
+<br>
+
+## *sigaction* Function
+
+
+```c
+#include <signal.h>
+int sigaction(int signo, const struct sigaction *act, struct sigaction *oact);
+
+struct sigaction {
+  void   (*sa_handler)(int); /* addr of signal handler, */
+             /* or SIG_IGN, or SIG_DFL */
+  sigset_t sa_mask;         /* additional signals to block */
+  int   sa_flags;         /* signal options */
+
+     /* alternate handler */
+  void  (*sa_sigaction)(int, siginfo_t *, void *);
+}
+```
+
+```c
+/* Reliable version of signal(), using POSIX sigaction().  */
+Sigfunc *
+signal(int signo, Sigfunc *func)
+{
+			  struct sigaction  act, oact;
+
+			  act.sa_handler = func;
+			  sigemptyset(&act.sa_mask);
+			  act.sa_flags = 0;
+			  if (signo == SIGALRM) {
+#ifdef  SA_INTERRUPT
+						  act.sa_flags |= SA_INTERRUPT;
+#endif
+			  } else {
+#ifdef  SA_RESTART
+						  act.sa_flags |= SA_RESTART;
+#endif
+			  }
+			  if (sigaction(signo, &act, &oact) < 0)
+						  return(SIG_ERR);
+			  return(oact.sa_handler);
+}
+```
+
+- 시그액션이라는 구조체를 통해서 시그알람이 발생할 경우, 인터럽트를 걸려면 어떻게 코드를 짜야하는가.
+- `if (signo == SIGALRM)` : sig number가 SIGALRM이면
+- `SA_INTERRUPT`, sigaction interrupt 걸어줘라

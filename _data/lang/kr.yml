@@ -1,0 +1,210 @@
+lng:
+  name: 한국어
+  code: kr
+  country: KR
+  switch_title: Kr
+  offer:
+    title: 언어
+    msg_page: 이 페이지를 한국어로 보기.
+    msg_site: 홈으로 이동
+
+date:
+  long: "%Y년 %b %-d일"
+  day: "%-d"
+  year: "%Y"
+  months: [1월, 2월, 3월, 4월, 5월, 6월, 7월, 8월, 9월, 10월, 11월, 12월]
+
+not_found:
+  header: 페이지를 찾을 수 없습니다
+  line1: 요청하신 페이지를 찾을 수 없습니다.
+  line2: 메뉴를 확인하거나 검색을 시도해 보세요.
+
+no_translation_tooltip: 번역 없음
+
+navigation:
+  contact_header: 연락하기
+
+color_scheme_switch_tooltip: 색상 테마 변경
+
+search:
+  placeholder: 검색
+  noResultText: 검색 결과가 없습니다.
+
+image_viewer:
+  load_error: 이미지를 불러올 수 없습니다.
+
+copyright:
+  additional_text: " 모든 권한 보유."
+
+creative_commons:
+  some_rights_reserved: 일부 권한 보유.
+  by: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution 4.0 International License에 따라 사용할 수 있습니다.
+  by-nd: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution-NoDerivatives 4.0 International License에 따라 사용할 수 있습니다.
+  by-sa: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution-ShareAlike 4.0 International License에 따라 사용할 수 있습니다.
+  by-nc: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution-NonCommercial 4.0 International License에 따라 사용할 수 있습니다.
+  by-nc-nd: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License에 따라 사용할 수 있습니다.
+  by-nc-sa: 별도로 언급되지 않는 한, 이 웹사이트의 콘텐츠는 Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License에 따라 사용할 수 있습니다.
+
+not-found:
+  title: "404"
+
+post:
+  read_time:
+    unit: " 분"
+    text: " 독서 시간"
+    word_char: c
+    per_minute: 200
+  pager_buttons:
+    older_post: "← 이전 글"
+    newer_post: "다음 글 →"
+    first_post: 첫 글
+    last_post: 마지막 글
+  comments:
+    noscript: 댓글을 보려면 JavaScript를 활성화하세요.
+    disqus:
+      count_title: 댓글
+      click_to_load: "댓글 불러오기"
+      consent:
+        title: 댓글 (Disqus.com)
+        text: >
+          댓글 기능은 제3자에 의해 제공됩니다. 외부 콘텐츠를 표시함으로써 disqus.com의 $terms 및 $privacy_policy을 수락합니다.
+          <br>타겟팅 광고 수신을 원치 않을 경우 $settings_link을 열고 "거부" 버튼을 클릭한 후 닫으세요. 여기로 돌아와 댓글을 불러오세요.
+        terms_link_text: 서비스 약관
+        privacy_link_text: 개인정보 처리방침
+        settings_link_text: 이 링크
+        button:
+          load_once: 한 번만 표시
+          load_and_do_not_ask_again: 항상 표시
+  table_of_contents:
+    heading: 목차
+    tooltip:
+      move: 이동하려면 드래그하세요
+      close: 닫기
+  share:
+    heading: 공유하기
+    link_copied: 링크 복사됨!
+    tooltip:
+      twitter: 트위터
+      facebook: 페이스북
+      telegram: 텔레그램
+      linkedin: 링크드인
+      email: 이메일
+      copy_link: 링크 복사
+
+post-list:
+  title: 블로그
+  button_name: 블로그
+  upside_down_tabs:
+    tab:
+      all: 전체
+      categories: 카테고리
+      tags: 태그
+      years: 연도
+      clear: 지우기
+      close: 닫기
+      tooltip:
+        clear: 지우기
+        close: 닫기
+    msg:
+      property_list:
+        tags: 태그
+        category: 카테고리
+        year: 연도
+      resultFoundTitleFormat: "{property} : {thumb}"
+
+home:
+  title: 환영합니다
+  button_name: 홈
+  new_posts_title: 최신 글
+  new_posts_show_more_button: 더 보기 ...
+
+archives:
+  title: 아카이브
+  button_name: 아카이브
+  page_header: 아카이브
+
+about:
+  title: 소개
+  button_name: 소개
+  email_title: 이메일
+
+links:
+  title: 링크
+  button_name: 링크
+  link_text: 웹사이트
+  info_text: 정보
+
+projects:
+  title: 프로젝트
+  button_name: 프로젝트
+  read_more_text: 더 읽기
+  read_less_text: 축소
+
+privacy-policy:
+  title: &privacy_policy_title 개인정보 처리방침
+
+constants:
+  greetings: 안녕하세요!
+  welcome: 안녕하세요! 나는
+  intro: 개발자 / 한양대학교
+  subtitle: |
+    서울 한양대학교 컴퓨터 소프트웨어 공학과 4학년 학생입니다. 
+    컴퓨터 비전, 자율 주행 및 백엔드 기술에 깊은 관심이 있습니다.
+    졸업 캡스톤 프로젝트는 NeRF와 3D 가우시안 스플랫 기술을 사용하여 여러 이미지를 3D로 재구성하는 것입니다.
+    
+
+contact_form:
+  button_name: 문의하기
+  formLoadingText: 문의 양식을 불러오는 중...
+
+cookie_consent:
+  privacy_policy_link_text: *privacy_policy_title
+  side_nav_setting_button_tooltip: &cookie_settings 쿠키 설정
+  panel_bar:
+    msg: >
+      이 웹사이트는 사이트 기능을 최적화하기 위해 쿠키를 사용합니다.
+      승인하면 활성화됩니다.
+    privacy_msg: $privacy_link을 확인하세요.
+    buttons:
+      accept: *accept_button
+      settings: 설정
+      deny: *deny_button
+  panel_settings:
+    title: *cookie_settings
+    msg: >
+      이 웹사이트는 사이트 기능을 최적화하기 위해 쿠키를 사용합니다.
+      승인하면 활성화됩니다. 쿠키 정책을 확인하려면 아래 항목을 클릭하세요.
+    privacy_msg: $privacy_link을 확인하세요.
+    buttons:
+      accept: *accept_button
+      save: 선택 사항 허용
+      deny: *deny_button
+    always_active: 항상 활성화
+    consent_types:
+      necessary:
+        title: 필수 쿠키
+        info: >
+          이 쿠키는 웹사이트 기능에 필수적이며 비활성화할 수 없습니다.
+          사이트 기능 변경(예: 색상 테마 변경) 시 자주 설정됩니다.
+          이 쿠키는 개인 식별 정보를 저장하지 않습니다.
+          $gtag_info
+      analytics:
+        title: 성능 쿠키
+        info: $gtag_info
+      preferences:
+        title: 기능 쿠키
+        info: $gtag_info
+      advertising:
+        title: 타겟팅 및 광고 쿠키
+        info: $gtag_info
+    gtag_info:
+      ad_storage: >
+        광고와 관련된 저장(쿠키 등)을 활성화합니다.
+      analytics_storage: >
+        분석과 관련된 저장(쿠키 등)을 활성화합니다. 방문 기간 등이 포함됩니다.
+      functionality_storage: >
+        웹사이트 또는 앱 기능을 지원하는 저장을 활성화합니다. 언어 설정 등이 포함됩니다.
+      personalization_storage: >
+        개인화와 관련된 저장을 활성화합니다. 비디오 추천 등이 포함됩니다.
+      security_storage: >
+        인증 기능, 사기 방지 및 기타 사용자 보호와 관련된 저장을 활성화합니다.

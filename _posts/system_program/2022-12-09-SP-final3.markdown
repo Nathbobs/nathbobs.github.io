@@ -1,0 +1,280 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_final3
+title: "System Programming Ch15 - Ch16"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, FINAL]
+# thumbnail image for post
+img: ":sp/post_pic_sp_final3_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-12-09 17:00:00 +0900
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_15
+
+## Pipes
+
+(pipe는 개념자체가 그렇게 어렵지 않기 때문에 단답형으로 나올 확률 큼)
+
+**_pipe_**
+
+-   **_half - duplex_** : 보통 반이중이라고 함, 단방향, 특정시점에는 한명만 통신가능, 한명은 sender고 한명은 reciever
+
+![pipe](:sp/post_pic_sp_final3_1.png){:width="700px"}
+
+(그림 외울 필요는 X, 이해만 하면 됨)
+
+-   pipe라는 함수 인자는 file descriptor 배열 2개
+-   반이중이기 때문에 입력 하나, 출력 하나로 2개임
+-   0은 입력, 1은 출력
+
+<br>
+
+![pipe2](:sp/post_pic_sp_final3_2.png){:width="700px"}
+
+위 구조는
+
+-   parent의 0이 child의 1, parent의 1이 child의 0으로 들어감
+-   parent와 child process 간에 서로 입력을 주고받는 것
+-   이럴때는 반이중이 아님
+-   pipelined으로 주고받는 채팅 프로그램 만들때는 이렇게 둘 다 씀
+-   send와 recieve를 둘 다 열어두는 것임
+
+<br>
+
+![pipe3](:sp/post_pic_sp_final3_3.png){:width="700px"}
+
+이건 parent 출력, child recieve
+→ 부모는 쓰기만 하고, child는 받기만 함
+
+```c
+#include "apue.h"
+int main(void)
+{
+	  int  n;
+	  int  fd[2];
+	  pid_t  pid;
+	  char  line[MAXLINE];
+
+	  if (pipe(fd) < 0)
+			  err_sys("pipe error");
+	  if ((pid = fork()) < 0) {
+			  err_sys("fork error");
+	  } else if (pid > 0) {  /* parent */
+			  close(fd[0]); //입력 안받음
+			  write(fd[1], "hello world\n", 12); //hello world를 출력할 것임
+	  } else {  /* child */
+			  close(fd[1]); //출력 안함
+			  n = read(fd[0], line, MAXLINE); //입력만 받음
+			  write(STDOUT_FILENO, line, n);
+	  }
+	  exit(0);
+}
+```
+
+-   `if (pipe(fd) < 0)`에서 fd 는 `int  fd[2];`
+-   pipe라는 함수를 수행했을 때 인자로 fd를 넣어준다는 것은,
+-   fd 0에는 입력, 1에는 출력을 할당하겠다는 것임
+
+-   `if ((pid = fork()) < 0)` : fork를 했는데 0보다 작으면 child process만드는 것을 실패했으니 에러,
+    정상적으로 동작했다면 parent는 0보다 큰 양수값(child process id)을 가질 것이고, 자식 프로세스 그 자신은 pid값이 0일 것임
+-   하나의 코드 안에서 두개의 프로세스를 제어하다 보니까 if 문과 else문으로 나뉘게 되는 것
+
+<br>
+
+**_cat file \| pager_**
+
+**_pager_** : 책을 넘기는 것처럼 모니터 안에 표현할 수 없을 만큼 많은 양이 들어오면 다음장으로 넘겨주는 기능
+
+-   cat file로 파일을 읽었는데, 한 모니터에 출력하지 못할만큼 너무 길면 pager로 다음장으로 넘기는 기능을 추가해주라는 것
+-   구현하려면 pipe fork dup exec 함수를 써서 구현해야됨
+-   그걸 구현한 코드가 밑에 코드
+
+<br>
+
+**시험에 무조건 나옴!! 코드 외워야됨**
+
+```c
+#include "apue.h"
+#include <sys/wait.h>
+#define  DEF_PAGER  "/bin/more"
+int main(int argc, char *argv[])
+{
+	   int  n;
+	   int  fd[2];
+	   pid_t  pid;
+	   char  *pager, *argv0;
+	   char  line[MAXLINE];
+	   FILE  *fp;
+
+	   if (argc != 2)
+		      err_quit("usage: a.out <pathname>");
+
+		 //인자가 하나일 경우에만 동작
+	   if ((fp = fopen(argv[1], "r")) == NULL) //첫번째 인자로 들어온 애를 읽기 권한으로 열음
+		      err_sys("can't open %s", argv[1]);
+	   if (pipe(fd) < 0) //pipe 만들었음
+		      err_sys("pipe error");
+
+	   if ((pid = fork()) < 0) { //fork 0보다 작으면 에러
+		      err_sys("fork error");
+		 } else if (pid > 0) {  //0보다 크니까 parent
+			   **close(fd[0]);**   //parent는 입력을 안함, 출력만(쓰기만)
+
+			   /* parent copies argv[1] to pipe */
+			   **while (fgets(line, MAXLINE, fp)!= NULL)** { //fp로부터 문자열을 입력받겠다는 것, MAXLINE만큼
+			      n = strlen(line);
+			      **if (write(fd[1], line, n) != n)** //fd[1]로 write를 함, line,즉 파일의 끝까지
+			          err_sys("write error to pipe");
+			   } //파일을 다 읽을 때까지 while문 돌고
+
+	       if (ferror(fp))
+	           err_sys("fgets error");
+
+ 	       /* close write end of pipe for reader */
+ 	       **close(fd[1]);** //출력하는 pipe 닫음
+
+	       **if (waitpid(pid, NULL, 0) < 0)** //자식프로세스가 끝날때까지 기다림
+		         err_sys("waitpid error");
+	      exit(0);
+		} else {  //pid가 0인 경우, 자식 프로세스
+			   **close(fd[1]);** //자식 프로세스는 읽기만 함, 출력 x
+			   **if (fd[0] != STDIN_FILENO) {** //입력이 아니면
+			      **if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO)** //dup2, 파일디스크립터를 복사, fd[0]를 입력받는 파일 디스크립터로 강제로 복사해줘라
+			          err_sys("dup2 error to stdin"); //그래도 입력받는애로 세팅이 안되면 에러
+			          /* don't need this after dup2 */
+			          close(fd[0]);  
+			      }
+
+			      /* get arguments for execl() */
+			      if ((pager = getenv("PAGER")) == NULL)
+				         pager = DEF_PAGER;
+			      if ((argv0 = strrchr(pager, '/')) != NULL)
+				         argv0++;
+			      else
+				         argv0 = pager;
+
+			      **if (execl(pager, argv0, (char *)0) < 0)** //execl로 pager 명령어 수행
+				         err_sys("execl error for %s", pager);
+				  }
+	   exit(0);
+}
+```
+
+<br>
+
+# 💡 Chap_16
+
+## Socket Types
+
+**tcp와 udp의 차이가 중요!**
+
+![socket type](:sp/post_pic_sp_final3_4.png){:width="700px"}
+
+-   **_tcp_** : **_STREAM_**, 연결지향성, 신뢰성, 안정적
+-   **_udp_** : **_DATAGRAM_**, 비연결성, 비신뢰성, 막무가내
+
+<br>
+
+## Byte Ordering
+
+**_시스템프로그래밍, 시스템해킹의 꽃_**
+
+```c
+#include <arpa/inet.h>
+uint32_t htonl(uint32_t hostint32);
+uint16_t htons(uint16_t hostint16);
+uint32_t ntohl(uint32_t netint32);
+uint16_t ntohs(uint16_t netint16);
+```
+
+-   **_hton_** : host to network (l은 long, s는 short)
+    -   내가 지금 pc에서 쓰고 있는 little-endian 방식을 network에서 쓰고 있는 big-endian 방식으로 바꾼다는 것
+-   **_ntoh_** : network to host
+    -   network에서 사용하고 있는 big-endian 방식을 host에서 사용하는 litte-endian 방식으로 바꿈
+
+![endian](:sp/post_pic_sp_final3_5.png){:width="700px"}
+
+-   **_Big-endian_** : 순서대로, 대소비교가 편해짐, 네트워크에서 사용(ip로 pc를 구분하기 때문에)
+-   **_Little-endian_** : 거꾸로 저장, 홀짝구분이 편해짐, 컴퓨터시스템에서 사용
+
+<br>
+
+## Socket System Calls for Connection-Oriented Protocol
+
+**_연결지향성 TCP, 신뢰성 있음_**
+
+![connection-oriented protocol](:sp/post_pic_sp_final3_6.png){:width="700px"}
+
+-   왼쪽서버에서 소켓 함수를 부름 → 휴대폰 하나 사는 것
+-   bind 함수 → 유심 꽂고 전화번호 부여 받는 것
+-   listen → 전화 올때까지 대기
+-   accept → 전화온거 통화버튼 슬라이드
+-   client → 소켓, 전화를 하나 삼, 근데 전화를 받진 못하고 할 수만 있는것, 대포폰
+                 → bind를 하지 않음, 소켓하나로 바로 서버에 연결(connect)
+
+<br>
+
+## Socket System Calls for Connectionless Protocol
+
+**_비연결성 UDP, 신뢰성 없음_**
+
+![connectionless protocol](:sp/post_pic_sp_final3_7.png){:width="700px"}
+
+-   서버쪽에서 서버를 만들고(socket), 유심 꽂고(bind), 데이터 올때까지 기다려(recvfrom)
+-   listen과 accept가 없음
+-   client쪽에서는 socket하고 bind 받아야됨
+
+TCP vs UDP
+
+-   TCP는 client의 id를 bind하지 않아도 서버에 의하여 식별할 수 있음 (handler가 생겨서)
+-   UDP는 client에서 id를 서버로 알려줘야함 (연결성이 없기 때문에)
+
+<br>
+
+## Date Transfer
+
+```c
+#include <sys/socket.h>
+ssize_t send(int sockfd, const void *buf, size_t nbytes, int flags);
+
+#include <sys/socket.h>
+ssize_t sendto(int sockfd, const void *buf, size_t nbytes, int flags, const struct sockaddr *destaddr, socklen_t destlen);
+
+#include <sys/socket.h>
+ssize_t recv(int sockfd, void *buf, size_t nbytes, int flags);
+
+#include <sys/socket.h>
+ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags, struct sockaddr *addr, socklen_t *addrlen);
+```
+
+-   TCP에서 쓰는 함수 : send, recv
+-   UDP에서 쓰는 함수 : sendto, recvfrom

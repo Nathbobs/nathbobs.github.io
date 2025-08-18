@@ -1,0 +1,80 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_CSP_lab1
+title: "LAB : Vim"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Creative Software Programming
+# multiple tag entries are possible
+tags: [CSP, LAB]
+# thumbnail image for post
+img: ":csp/post_pic_csp_lab1_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-09-06 09:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# Vim
+
+# editor : vi
+
+## vi
+
+- visual screen text editor
+- 대부분 Unix system에서 사용 가능
+
+## vim
+
+- vi 를 현대에 맞게 개조한 버전
+- 단어 자동완성, 파일 비교/merge
+- 모든 기능이 단축키로 가능 (마우스가 없던 시절에 만들어짐)
+- 모든 저장은 버퍼에
+
+## 왜 vi ?
+
+- 모든 리눅스에 기본 설치되어 있음
+- Vundle 이용하면 플러그인 사용 가능
+    
+    [https://github.com/VundleVim/Vundle.vim](https://github.com/VundleVim/Vundle.vim)
+    
+
+## Modes of vi
+
+- **commad mode** : vi의 기본 모드, 뷰어처럼 동작
+- **input mode** : command 쳐서 들어가고, 입력이 끝나면 esc로 빠져나옴
+- **last line mode** : command mode에서만 접근 가능
+
+![vi mode](:csp/post_pic_csp_lab1_1.png)
+
+## Starting vi
+
+- 터미널에 vimtutor로 사용법 익히기
+
+```bash
+vimtutor
+```

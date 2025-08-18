@@ -1,0 +1,321 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_midterm2
+title: "System Programming Ch3"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, MIDTERM]
+# thumbnail image for post
+img: ":sp/post_pic_sp_midterm2_2.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-10-14 16:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_3
+
+![File Descriptors](:sp/post_pic_sp_midterm2_1.png){:width="700px"}
+
+File Descriptors
+
+
+📎 **File Descriptors**
+
+- os에서 확정된 파일 디스크립터
+    
+    0 : 표준입력
+    
+    1 : 표준출력
+    
+    2 : 표준에러
+    
+- 파일 디스크립터를 반환받을 때는 0,1,2를 제외하고 가장 낮은 integer을 반환하기 때문에 non-negative integer returned by *open* or *create*
+
+
+
+📎 ***open* function**
+
+**(단답형)**파일을 여는 함수명을 쓰시오.
+
+⇒ open
+
+```c
+#include <fcntl.h>
+int open(const char *pathname, int oflag, ... /* , mode_t mode */);
+```
+
+**oflag argument**
+
+- open의 인자 (*int oflag*)
+- 읽을건지, 쓸건지, 둘 다 할건지
+    1. O_RDONLY : 읽기만 함
+    2. O_WRONLY : 쓰기만 함
+    3. O_RDWR : 둘 다 함
+- Optional
+    1. O_APPEND : 파일에 이미 내용이 있는데 그 뒤에 추가하고 싶을 때 씀
+    2. O_CREAT : 없는 파일을 만들 때 씀
+    3. O_EXCL : exception, 예외 처리
+    4. O_TRUNC : truncate, 안에 있는 내용을 전부 날려줌
+    5. O_NOCTTY
+    6. O_NONBLOCK
+
+
+
+📎 ***creat , close* Function**
+
+```c
+#include <fcntl.h>
+int creat(const char *pathname, mode_t mode);
+
+//equivalent to
+open(pathname, O_WRONLY | O_CREAT |O_TRUNC, mode);
+```
+
+- open함수에서 O_CREAT는 옵션이고, creat는 파일을 생성하는 함수이다.
+- close는 이제 파일 디스크립터를 더이상 사용하지 않는다, 즉 닫는 함수
+
+
+
+📎 ***read, write* Function**
+
+- read 함수는 읽은 바이트 수만큼 반환을 함
+- EOF(end of file)는 0을 반환
+- EOF 만나면 파일의 끝
+- write 함수는 쓴 바이트 수만큼 반환을 함
+
+```c
+#include <unistd.h>
+ssize_t write(int filedes, const void *buf, size_t nbytes);
+```
+
+- nbytes 내가 쓰기를 수행할 바이트의 수 (이것과 write가 반환한 수를 비교해서 같은지 확인하면 제대로 수행했는지 확인 가능)
+
+
+
+📎 ***lseek* Function**
+
+- 내가 파일을 어디까지 읽었는지, 또는 어디서부터 쓸지 위치를 알고싶을 때 씀
+- 혹은 그 위치로 옮겨갈 때 씀
+
+1. SEEK_SET : 처음 위치로 옮겨감 (offset from the beginning of the file)
+2. SEEK_CUR : 지금 현재 위치 (current file offset + offset)
+3. SEEK_END : 파일의 끝 (file size + offset) (이때 offset은 음수)
+- offset : 얼마만큼 skip 할건지 정해줌 (기준점이 됨)
+
+**(단답형)**
+
+파일 디스크립터를 처음으로 옮기는 옵션은? ⇒ SEEK_SET
+
+끝으로 옮기는 옵션은? ⇒ SEEK_END
+
+파일이 현재 읽고있는 포인터의 위치를 옮기는 함수는? ⇒ lseek
+
+
+
+## File Sharing
+
+![File Sharing_1](:sp/post_pic_sp_midterm2_2.png){:width="700px"}
+
+File Sharing_1 (그림 자체를 그리라는 문제가 나올 확률이 매우 높음)
+-오른쪽으로 갈수록 점점 하드웨어에 가까움
+→ 위 그림은 하나의 프로세스에서 두개의 file descriptor를 만들고 각기 다른 v-node에 접근
+
+
+📎 **process table entry**
+
+- 프로세스(우리가 작성하는 main안에 있는 코드)에 대한 정보를 가지고 있는 출석부
+- 프로세스에서 어떤 file descriptor들이 열려있는지를 알려줌 (0,1,2 는 os에서 기본으로 열어 놓음)
+
+**file table**
+
+- 파일에 대한 정보(파일의 이름, 생성자, 소유자, 소유그룹, 생성시간, 이 파일의 디스크립터는 몇개가 연결되어있나 등, metadata)를 가지고 있는 출석부(table)
+- metadata는 실제로 i-node에 있음, file table은 중간자 역할
+- 파일의 개수만큼 존재
+- file status flags : 쓰기모드로 열려있나, 읽기모드로 열려있나 … 파일에 대한 상태 정보
+- current file offset : 파일이 어디서부터 어디까지 저장되어있는지 나타내는 기준
+- v-node ptr : 실제로 따라가보면 i-node가 있음 , 이 i-node가 metadata를 담고있음
+
+**v-node table**
+
+- v-node를 관리하는 테이블
+
+v-node
+
+→ os레벨에서 좀 더 쉽게 만들어준, i-node를 쉽게 변경하라고 제공해주는 것
+
+→ 즉, i-node를 제어하기 위한 virtual node interface이다.
+
+i-node
+
+→ 하나의 architecture, unix linux 시스템에서 파일을 저장 하려면 i-node라는 구성을 따라야함, 이 표준이 i-node architecture
+
+→ 하드웨어에 더 가까운 정보를 가지고 있음, 메모리/램에 더 가까워짐
+
+→ 파일의 용량이 늘어날 때 페이지는 몇개를 쓰고… 이런 정보를 담고 있음, 수치화된 정보
+
+→ 따라서 사용자가 바꿀 수 있어야하는데, 운영체제 안의 커널이 관리함
+
+→ 커널은 사용자가 쓰기에는 너무 어려움 그래서 os를 만들어놓음
+
+*process table entry, file table, v-node table 모두 커널에서 관리함
+
+
+
+![File Sharing_2](:sp/post_pic_sp_midterm2_3.png){:width="700px"}
+
+File Sharing_2
+→ 위 그림은 구조는 똑같지만 포인팅하는 화살표의 방향과 개수가 다름
+→ 서로 다른 프로세스가 서로 다른 파일 테이블에 접근하는데 v-node가 같음
+
+
+📎 v-node가 같다 = i-node가 같다 =
+
+서로다른 프로세스 두개가 같은 파일을 포인팅하고 있다. 
+
+파일 오픈을 똑같은 파일에 대해 두번하는 것임
+
+
+
+![dup and dup2 Functions](:sp/post_pic_sp_midterm2_4.png){:width="700px"}
+
+dup and dup2 Functions
+→ 프로세스 하나가 같은 파일테이블을 가리키고 v-node도 같음
+
+
+📎 ***dup, dup2* Functions**
+
+- duplicate
+- dup 함수를 쓰면 위 그림과 같이 동작함
+- 하나의 프로세스 내에서 파일 디스크립터를 복사
+- dup2는 같은역할, 인자만 다름
+
+**(단답형)**파일 디스크립터를 복사하는 함수는?
+
+⇒ **dup 또는 dup2**
+
+- dup : 가장 낮은 파일 디스크립터를 반환
+- dup2: fd1을 fd2로 복제하여 fd2를 반환 (fd2가 열려있다면 close하고 복제)
+
+
+## Atomic Operations
+
+
+📎 **race condition(경쟁 상태)**
+
+- 프로세스 두개가 동작을 하는데, 프로세스 하나는 증가연산자, 하나는 감소연산자라면 서로 동기가 맞는다면 초기값과 같아질 것임
+- 동기화돼서 일어나면 계속 0일 것임(초기값이 0이라면)
+- 근데, 동기가 안맞으면(정확히 1초에 한번씩 수행이 안됨) ⇒ 레이스 컨디션
+- 하나의 프로세스가 다른 프로세스에 영향을 미침
+
+**atomic operation**
+
+- 서로 다른 두개의 동작 간에 서로간의 영향을 미치지 않도록 하는 것
+- 각각의 프로세스가 하는 일은 서로 다른 프로세스에 영향을 미치면 안된다 
+→ 원자적인(atomic) 수행
+
+```c
+if (lseek(fd, 0L, SEEK_END) < 0) 
+//지금 현재 fd로 넘겨주는 파일의 처음부터 끝까지, 이를 1500이라 가정
+	err_sys("lseek error");
+if (write(fd, buf, 100) != 100)
+	err_sys("write error");
+```
+
+→ process A가 파일의 끝을 알고싶어서 lseek 함수를 씀 A의 길이 1500이라 가정
+
+→ process B도 길이가 1500인데, A보다 먼저 수행이 됨
+
+→ B는 100개를 더 씀, B의 file descriptor는 1600을 가리키게 됨
+
+→ A가 write를 수행하면 A는 B가 쓴 것을 overwrite하게 됨
+
+이런 상황에서 ***race condition*** 이 발생했다고 함
+
+⇒ 서로 다른 프로세스가 같은 파일을 포인팅 하고 있는 경우에 atomic operation을 보장해야함
+
+⇒ 원자성을 보호하기 위해 write 함수를 쓸 때 O_APPEND를 써야됨
+
+
+
+
+📎 *atomic operation*을 보장하는 함수
+
+⇒ ***pread, pwrite***
+
+- ***pread*** : lseek을 하고 read 함, 파일의 끝을 검색한 뒤에 읽어옴
+- ***pwrite*** : 끝으로 옮겨간 다음에 씀
+
+→ race condition처럼 서로 영향을 미치는 경우를 배제하겠다. 
+
+
+
+📎 ***sync***
+
+- :w 하면 저장이 되는데 내용만 디스크에 저장이 되는 것, 파일의 정보 저장은 커널이 하는 일
+- 디스크에 저장할 때 i-node에 관한 정보까지 저장될때까지 기다리는 함수
+
+***fsync***
+
+- sync와 같은 역할
+
+***fdatasync***
+
+- data가 저장되는 것까지만 기다림 (i-node까지 기다리는 건 아님)
+
+
+
+📎 ***fcntl***
+
+- 파일의 속성을 변경하고 싶을 때 쓰는 함수
+- file control
+
+
+
+📎 ***/dev/fd***
+
+- dev : 우분투나 리눅스에서 최상위 directory는 “ / “ ,
+    
+    그 최상위 디렉토리 바로 밑에 “ dev “(device)가 있음, 
+    
+    그 안에 “ fd “(file descriptor)라는 디렉토리가 있음
+    
+- fd 0,1,2는 고정, 사용자가 못씀
+    
+    근데 이걸 쓰거나 복사하고 싶으면 복사해서 씀
+    
+- 3번으로 표준입력을 하려면 /dev/fd에 있는 0을 연다.
+    
+    그러면 0번이 아닌 3번(제일 작은 양수값)으로 표준입력이 생김
+    
+
+**(단답형)**표준입력/표준출력/표준에러를 복사하여 다른 파일디스크립터로 할당받고자 할때 사용하는 함수는 무엇인가?
+
+⇒ ***open 또는 dup***
+

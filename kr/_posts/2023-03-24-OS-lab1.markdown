@@ -1,0 +1,377 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_OS_lab1
+title: "System Call and User Program"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Operating System
+# multiple tag entries are possible
+tags: [OS, Lab]
+# thumbnail image for post
+img: ":post_pic_os_lab1_main.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-03-24 10:04:30 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+## System Call
+
+
+![system call](:post_pic_os_lab1_1.png)
+
+- User는 직접 system call을 호출하거나 library를 통해 호출함
+- system call도 일반적인 C 함수임. 차이점은, 내부에서 trap 명령어를 호출한다는 것
+
+## User code/ Kernel code
+
+- ***Makefile***에 보면 user code와 kernel code가 분리되어있음
+- user code와 Kernel code는 컴파일을 같이하지만 링크를 할 때는 개별적으로함
+
+### USER
+
+```c
+**UPROGS=\**
+	_cat\
+	_echo\
+	_forktest\
+	_grep\
+	_init\
+	_kill\
+	_ln\
+	_ls\
+	_mkdir\
+	_rm\
+	_sh\
+	_stressfs\
+	_wc\
+	_zombie\
+	_myapp\
+```
+
+- 각각 하나의 program이 하나의 실행단위로
+- 커널과 통신하기 위한 library가 있음 (ex. ulib.c, usys.S, user.h)
+
+### Kernel
+
+```c
+**OBJS = \**
+	bio.o\
+	console.o\
+	exec.o\
+	file.o\
+	fs.o\
+	ide.o\
+	ioapic.o\
+	kalloc.o\
+	kbd.o\
+	lapic.o\
+	log.o\
+	main.o\
+	mp.o\
+	picirq.o\
+	pipe.o\
+	proc.o\
+	sleeplock.o\
+	spinlock.o\
+	string.o\
+	swtch.o\
+	syscall.o\
+	sysfile.o\
+	sysproc.o\
+	trapasm.o\
+	trap.o\
+	uart.o\
+	vectors.o\
+	vm.o\
+	prac_syscall.o\
+```
+
+- 전체가 하나의 program으로
+
+## User가 system call을 어떻게 호출하는가
+
+### cat.c (call)
+
+```c
+while((n = read(fd, buf, sizeof(buf))) > 0) { // 파일로부터 문자열 읽어서 buffer에 저장, 읽은 문자수 return
+    if (write(1, buf, n) != n) { //버퍼의 내용을 파일로 출력
+```
+
+### user.h (declared)
+
+- 함수 원형은 user 헤더파일에 선언, 함수 본체는 아님.
+
+```c
+int write(int, const void*, int);
+int read(int, void*, int);
+```
+
+### usys.S (defined)
+
+- 함수 본체가 어디있는지 알려줌
+- `.S` 는 개발자가 직접 작성한 assembly어 code를 의미
+
+```c
+**#define SYSCALL(name) \ //name에 해당하는 system call 정의**
+  .globl name; \
+  name: \
+    **movl $SYS_ ## name, %eax; \ // <syscall.h> 에 정의되어있는 SYS_name에 해당하는 번호를 eax 레지스터에 저장
+    int $T_SYSCALL; \ //system call interupt 발생시킴**
+    ret
+
+...
+
+SYSCALL(read)
+SYSCALL(write)
+```
+
+- 인터럽트가 호출되는 부분이 실제 system call이 이루어지고 service가 실행되는 부분임
+
+## Kernel이 system call을 어떻게 처리하는가
+
+### syscall.c
+
+```c
+void
+syscall(void)
+{
+  int num;
+  struct proc *curproc = myproc();
+
+  **num = curproc->tf->eax; //eax 레지스터로부터 받아온 num 값을 통해**
+  if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
+    **curproc->tf->eax = syscalls[num]();**
+  } else {
+    cprintf("%d %s: unknown sys call %d\n",
+            curproc->pid, curproc->name, num);
+    curproc->tf->eax = -1;
+  }
+}
+```
+
+```c
+**static int (*syscalls[])(void) = { //index는 syscall.h에 정의되어있음**
+...
+**[SYS_read]    sys_read,**
+[SYS_kill]    sys_kill,
+[SYS_exec]    sys_exec,
+[SYS_fstat]   sys_fstat,
+[SYS_chdir]   sys_chdir,
+[SYS_dup]     sys_dup,
+[SYS_getpid]  sys_getpid,
+[SYS_sbrk]    sys_sbrk,
+[SYS_sleep]   sys_sleep,
+[SYS_uptime]  sys_uptime,
+[SYS_open]    sys_open,
+**[SYS_write]   sys_write,**
+```
+
+## 새로운 system call 추가하기
+
+1. **Kernel**
+    1. system call 함수 만들고
+    2. ***Makefile***에 추가
+    3. 함수가 어떤 형태를 띠는지 ***<defs.h>***에 선언
+    4. 함수를 호출하는 wrapper function을 만들고
+    5. 만들어진 system call을 ***syscall.h***와 ***syscall.c***에 추가
+2. **User (like glibc)** 
+    
+    (system call을 사용하기 위해선 커널과의 통신 필요, 편의성을 위해 library로 함수를 만들어주는 과정)
+    
+    1. ***user.h***에 함수 선언
+    2. ***usys.S***에 새로운 매크로 추가
+    
+
+### 1.a) system call 함수 만들기
+
+- ***prac_syscall.c*** 파일 만들기
+
+```c
+#include "types.h"
+#include "defs.h"
+
+//Simple system call
+int
+myfunction(char *str) //문자열을 받아서
+{
+	cprintf("%s\n", str); //그 문자열을 콘솔에 출력하고
+	return 0xABCDABCD; //ABCD를 return 하는 함수
+}
+```
+
+### 1.b) Makefile에 추가
+
+- ***Makefile***에 `prac_syscall.o` 추가
+
+```makefile
+OBJS = \
+	bio.o\
+	console.o\
+...
+	vectors.o\
+	vm.o\
+	**prac_syscall.o\ //커널 부분 끝에 추가**
+```
+
+- make 해줌
+
+```bash
+$ make clean
+$ make | grep prac_syscall
+```
+
+### 1.c) 함수가 어떤 형태를 띠는지 ***<defs.h>***에 선언
+
+- ***defs.h***
+- 커널 전체가 공용으로 사용하기 위한 자료구조들이 존재한다는 것을 알려주는 파일
+
+```c
+...
+int             copyout(pde_t*, uint, void*, uint);
+void            clearpteu(pde_t *pgdir, char *uva);
+
+//prac_syscall.c
+**int myfunction(char*); // 함수 원형 선언**
+```
+
+### 1.d) 함수를 호출하는 wrapper function을 만들고
+
+- prac_syscall.c에 wrapper function을 통해 parameters를 받도록 해준다
+
+```c
+//Wrapper for my_syscall
+int
+sys_myfunction(void) //sys 붙여줌
+{
+	char *str;
+	//Decode argument using argstr
+	if(argstr(0, &str) < 0)
+		return -1;
+	return myfunction(str);
+}
+```
+
+### 1.e) 만들어진 system call을 ***syscall.h***와 ***syscall.c***에 추가
+
+- ***syscall.h***
+
+```c
+...
+#define SYS_close  21
+#define SYS_myfunction 22
+```
+
+- ***syscall.c***
+
+```c
+...
+extern int sys_uptime(void);
+**extern int sys_myfunction(void);**
+...
+[SYS_close]   sys_close,
+**[SYS_myfunction]   sys_myfunction,**
+```
+
+### 2.a) ***user.h***에 함수 선언
+
+- ***user.h***
+
+```c
+struct stat;
+struct rtcdate;
+
+// system calls
+int fork(void);
+...
+int uptime(void);
+**int myfunction(char*);**
+```
+
+### 2.b) ***usys.S***에 새로운 매크로 추가
+
+- ***usys.S***
+
+```c
+#include "syscall.h"
+#include "traps.h"
+
+#define SYSCALL(name) \
+...
+SYSCALL(sleep)
+SYSCALL(uptime)
+**SYSCALL(myfunction)**
+```
+
+## 새로운 user program 만들기 (실습 daily hw 내용 포함)
+
+1. 프로그램 만들고
+2. ***Makefile**에 등록*
+
+### 프로그램 만들기
+
+- ***myapp.c*** 파일 만들기
+
+```c
+#include "types.h"
+#include "stat.h"
+#include "user.h"
+
+int
+main(int argc, char *argv[])
+{
+	char *buf = argv[1];
+
+	int ret_val;
+	ret_val = myfunction(buf);
+	printf(1, "Return value : 0x%x\n", ret_val);
+	exit();
+};
+```
+
+### ***Makefile**에 등록*
+
+- ***Makefile***
+
+```makefile
+...
+UPROGS=\
+	_cat\
+...
+	_zombie\
+	**_myapp\**
+...
+EXTRA=\
+	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
+	ln.c ls.c mkdir.c rm.c stressfs.c wc.c zombie.c\
+	printf.c umalloc.c **myapp.c\**
+```
+
+![user program](:post_pic_os_lab1_2.jpg)
+
+![user program](:post_pic_os_lab1_3.jpg)
+

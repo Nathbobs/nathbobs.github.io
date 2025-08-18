@@ -1,0 +1,287 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_midterm3
+title: "System Programming Ch4"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, MIDTERM]
+# thumbnail image for post
+img: ":sp/post_pic_sp_midterm3_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-10-21 15:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_4
+
+## stat, fstat, and lstat
+
+```c
+#include <sys/stat.h>
+int stat(const char *pathname, struct stat *buf);
+int fstat(int filedes, struct stat *buf);
+int lstat(const char *pathname, struct stat *buf);
+```
+
+
+📎 ***stat, fstat :*** 파일 구조에 대한 설명을 출력한다
+
+- 파일 구조 : i-node에 있는 정보 중에 사이즈 블록, 데이터 몇개가 쓰임, 소유주가 누구야.. 등등 이 i-node를 참조해서 보여주는 것
+
+***lstat*** : 앞에 붙은 l은 link, symbolic link의 파일 구조나 정보를 반환
+
+<br>
+
+
+## Set-User-ID and Set-Group-ID
+
+![Set-User-ID and Set-Group-ID](:sp/post_pic_sp_midterm3_1.png){:width="700px"}
+
+실습 6주차 강의 자료
+
+
+📎 setuid - 4 (user에 super 권한)
+setgid - 2 (group에 super 권한)
+sticky bit - 1 (other에 super 권한)
+
+<br>
+
+## File Access Permissions
+
+
+📎 ***Directory***
+
+R - to obtain a list of all the file names in the dir
+W - to create/delete a file in the directory, both X and W are necessary
+X - to pass through the directory comprising a pathname, also called *“search bit”*
+
+***File***
+
+R - O_RDONLY and O_RDWR for the *open* function
+
+W - O_WRONLY, O_RDWR, O_TRUNC
+X - *exec* functions
+
+**(단답형)** 디렉토리에 새로운 파일을 만들 때 필요한 권한은 무엇인가?
+
+⇒ X, W
+
+**(단답형)** 디렉토리에 존재하는 파일을 지울 때 필요한 권한은 무엇인가?
+
+⇒ X, W
+
+
+
+
+📎 ***access Function***
+
+- 접근 권한이 유효한지를 판단해서 반환해주는 함수
+- 접근할 때 쓰는 것이 아닌, 접근할 수 있는 권한이 있는지 없는지를 반환해줌
+
+```c
+#include <unistd.h>
+int access(const char *pathname, int mode);
+```
+
+mode : R_OK(R권한이 없으면 0 반환, 있으면 양수 반환), W_OK, X_OK, F_OK(R,W,X 전부 다)
+
+
+
+
+📎 ***umask Function***
+
+```c
+#include <sys/stat.h>
+mode_t umask(mode_t, cmask);
+```
+
+- 파일이나 디렉토리를 생성할 때, 초기권한을 뭘로 줄지 결정지을 수 있는 함수
+
+- 파일은 실행권한(X)이 필요없음 즉, 파일의 최대권한은 666
+    
+    
+    | 파일의 최대 권한 | 666 | 666 |
+    | --- | --- | --- |
+    | umask | 002 | 004 |
+    | umask를 만들고 바뀐 권한 | 664 | 662 |
+- umask는 파일의 최대권한에서 지금 세팅되어있는 유마스크 값을 뺀 값으로 파일을 생성함
+- umask는 함수, cmask는 인자 (umask와 cmask 값의 의미는 동일)
+
+```c
+#include "apue.h"
+#include <fcntl.h>
+#define RWRWRW (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+
+int main(void)
+{ //파일의 최대 권한은 666
+	umask(0); //umask 0
+	if(creat("foo", RWRWRW) < 0) //foo는 666으로 생성
+		err_sys("creat error for foo")
+	umask(S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH); //umask 066
+
+	if(creat("bar", RWRWRW) < 0)//bar는 600으로 생성
+		err_sys("creat error for bar");
+
+	exit(0);
+}
+```
+
+![umask Function](:sp/post_pic_sp_midterm3_2.png){:width="700px"}
+
+
+
+
+📎 ***chmod, fchmod Functions***
+
+- ***chmod*** : change mode, 파일의 접근 권한을 바꿀 때 쓰는 함수
+- ***fchmod*** : 같은 역할, 인자만 다름
+
+
+
+📎 ***Sticky Bit***
+
+- 1000으로 세팅된 특수권한
+
+
+
+📎 ***chown, fchown, and lchown***
+
+- ***chown*** : 소유자와 소유그룹을 바꾸는 함수
+- ***fchown*** : 인자만 다름
+- ***lchown*** : symbolic link 자체의 소유주와 소유그룹을 바꿈
+
+
+
+📎 ***File Truncation***
+
+**(단답형)** 다음 중 인자로 넘겨주는 length만큼 잘라내는 함수는 무엇인가?
+
+⇒ ***truncate, ftruncate***
+
+<br>
+
+## Symbolic Links (시험문제 100% 나옴)
+
+![symbolic link](:sp/post_pic_sp_midterm3_3.png){:width="700px"}
+
+그림, 코드 전부 외우기
+
+
+📎
+
+- foo directory 안에 file a 랑 testdir directory가 있음
+- ln -s ../foo  foo/testdir
+    
+    —> testdir이 자기 부모인 foo directory를 포인팅함 (symbolic link를 걸었음)
+    
+
+*directory를 link 걸 수 있는 건 무조건 오로지 root 사용자만 (superuser만)
+
+
+
+
+📎 ***Symbolic Links***
+
+![symbolic link](:sp/post_pic_sp_midterm3_4.png){:width="700px"}
+
+- symbolic link (=soft link) 는 hard link 와 대비됨
+- H1을 소스로 하는 hard link를 건 H2, H3를 생성하면 위와 같은 형태가 됨
+- Hard link는 같은 i-node를 가리킴
+- soft link는 s1을 원본으로 s2를 만들 때, s2는 독립적인 i-node를 포인팅 하는데, 그 i-node가 origin을 포인팅하게됨
+- hard link는 H1을 삭제해도 H2, H3에 영향을 미치지 않지만,
+- soft link는 S1을 삭제하면 i-node도 같이 삭제되므로 S2를 열 수 없음
+- soft link는 바로가기 라고 함, 원본을 복제는 하지만 그 자체를 복제하는 것이 아닌 그 원본을 포인팅하는 뭔가를 만듬
+
+
+
+📎 ***symlink, readlink Function***
+
+```c
+#include <unistd.h>
+int symlink(const char *actualpath, const char *sympath);
+```
+
+***symlink*** : symbolic link를 생성할 때 쓰는 함수
+
+```c
+#include <unistd.h>
+ssize_t readlink(const char *pathname, char *buf, size_t bufsize);
+```
+
+***readlink*** : link가 걸려있는, 실제 포인팅하고 있는 파일을 오픈해주는, 읽어주는 함수 (equivalent to the actions of *open, read, and close*)
+
+
+
+
+📎 ***link, unlink, remove, and rename Functions***
+
+- ***link*** : hard link를 만듬
+- ***unlink***
+- ***remove*** : file에 쓰면 unllink와 같은 효과, 디렉토리에 쓰면 rmdir과 같은 효과
+- ***rename***
+
+symclink를 설명할 때는 무조건 symbolic link가 나옴
+
+이런 내용이 안나오면 무조건 link 함수
+
+
+
+
+📎 ***utime Function***
+
+```c
+#include <sys/types.h>
+#include <utime.h>
+int utime(const char *pathname, const struct utimbuf *times);
+struct utimbuf{
+	time_t actime /* access time */
+	time_t modtime /* modification time */
+}
+```
+
+- 파일에 접근한 시간(생성한 시간)과 변경한 시간을 알고 싶을 때 쓰는 함수
+
+
+
+📎 ***mkdir and rmdir Fuction***
+***mkdir*** : make directory
+***rmdir*** : remove directory
+
+
+
+
+📎 ***chdir, fchdir, and getcwd***
+
+***chdir*** : change directory, 내가 현재 작업하고 있는 곳(working directory)의 경로를 바꿀 때 쓰는 함수
+
+***fchdir*** : 인자만 다름
+
+***getcwd*** : current working directory의 경로를 가지고 오는 함수
+

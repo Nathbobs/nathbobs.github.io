@@ -1,0 +1,158 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_midterm1
+title: "System Programming Ch1 - Ch2"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, MIDTERM]
+# thumbnail image for post
+img: ":sp/post_pic_sp_midterm1_2.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-10-14 15:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_1
+
+![/etc/passwd](:sp/post_pic_sp_midterm1_1.png){:width="700px"}
+
+/etc/passwd composed of seven colon-separated fields
+
+📎 **(단답형)** 사용자의 정보를 7개의 필드로 구분해서 가지고 있는 파일명은 무엇인가?                                       
+⇒ **passwd** 또는 **/etc/passwd** (full path)
+
+<br>
+
+### 리눅스 명령어
+
+“ **/** ” : root directory
+
+” **.** “ : 현재 경로
+
+” **pwd** “ : 현재 경로 / 최상위 경로부터 내가 일하는 공간까지의 path를 다 알려줌 (path working directory)
+
+<br>
+
+📎 **(서술형)** Unbuffered I/O와 Standard I/O의 차이를 설명하고 버퍼링을 하는 이유를 서술하시오.
+
+**answer >>** 
+Unbuffered I/O는 버퍼링을 아예 안하는 것으로 open, read, write … 등의 함수를 사용하고, 
+Standard I/O는 표준을 만들어야되는 기관에서 배포하는 I/O로 버퍼링을 한다. fopen, fgetc, printf… 등의 함수를 사용한다.  
+버퍼링의 목적은 시스템의 부화를 줄이고 입출력 속도를 빠르게 하기 위함이다. 
+
+<br>
+
+- 버퍼링의 종류에는 3가지가 있다.
+    1. ***Fully buffered*** : 버퍼가 가득 찰 때까지 기다렸다 입출력을 수행
+    2. ***Line buffered*** : 라인 단위로 입출력을 수행
+    3. ***Unbuffered*** : 버퍼링 안함 (버퍼링 안하는 것도 버퍼링이라고 함)
+
+<br>
+<br>
+
+![Process control](:sp/post_pic_sp_midterm1_2.png){:width="700px"}
+
+Process control: *fork*, *exec*, and *waitpid (그림 안외워도 됨)*
+
+<br>
+
+**fork**
+
+- 뭔가를 분기하여 branch(가지)가 생김
+- 원래 프로그램이 수행하던 것 말고 다른 흐름을 만들어냄
+- Main안에 돌고있는 건 parent process가 하는 것, 여기서 fork를 쓰면 child process가 생김, 이 child process에서 다른 일을 수행 가능
+
+**exec**
+
+- child process가 일을 수행할 때 쓰는 함수
+
+**waitpid**
+
+- parent process가 먼저 종료가 되면 child process가 미아가 됨(미아/ 좀비 프로세스)
+- 부모가 먼저 종료되지 않도록 자식 프로세스가 수행하는 일이 끝날 때까지 종료하지 말고 기다리게 할 때 쓰는 함수
+
+<br>
+
+**Threads** (문제가 나온 적은 없지만 중요한 개념)
+
+- Thread도 분기라는 개념을 가짐
+- (부모 프로세스와 자식 프로세스는 복제다, 즉 프로세스가 하나 더 생기는 것임)
+- 근데 쓰레드는 프로세스는 하나지만, 그 안에서 분기가 일어나는 것, 즉 공유하는 것이 당연히 생길 수밖에 없음
+- thread는 process와 공유하는 것이 3가지가 있음
+    1. Address space
+    2. File descriptors
+    3. process-related attributes
+    4. ~~Stack~~ (쓰레드 연산이 달라져야되는 것을 코딩할 때 쓰는 것이 stack, 즉 달라져야됨)
+- process와 thread의 차이점 설명하는 것 중요 (면접같은 데에서)
+- thread는 하나의 프로세스 내에서 분기를 가짐, process보다 thread가 더 많은 것을 공유함
+
+<br>
+
+📎 **(단답형)** 다음 중 1970년 1월 1일 0시 0분 0초 이후로 얼마만큼의 시간(초 단위)이 지났는지의 정보를 담고있는 구조체는 무엇인가?
+
+⇒ **time_t**
+
+- UTC : 세계표준협정시, 1970년이라고 동기화 시킴
+
+***clock_t***
+
+- cpu는 하나의 소자로 되어있음, 소자 안에는 트랜지스터가 있음
+- 트랜지스터는 물리적인 연산을 가능하게 함
+- 트랜지스터의 성능을 이야기할 때 GHz로 말함 , 초당 얼마만큼의 명령어를 수행할 수 있냐를 말함
+- 그때의 초를 계산할 때 박수를 한 번씩 쳐줌, 이 박수치는 주기(스톱워치)를 clock_t라고 한다.
+- 이 박수를 tick이라 함
+- process time in clock tick
+
+<br>
+
+# 💡 Chap_2
+
+**Limits**
+
+- 파일 내지는 디렉토리랑은 상관없는 runtime limit
+
+<br>
+
+📎 **(단답형)**파일과 디렉토리와 관계없이 런타임리미트를 설정할 수 있는 함수는 무엇인가?
+
+⇒ **sysconf function**
+
+- 런타임리미트: 런타임(무언가를 수행할 때) 중에 제한을 거는 것, 프로세스라는 단위로 수행이 될 때 제한을 걸어두는 것, 프로세스의크기, 프로세스가 가져다 쓸 메모리의 최대치 등
+- 프로세스에 제한을 거는 것이므로 file, directory와는 관계가 없음
+
+<br>
+
+📎 **(단답형)**파일, 디렉토리와 관련된 런타임리미트는 무엇인가?
+
+⇒ **pathconf, fpathconf function**
+
+- 파일명의 크기, 파일에 저장할 수 있는 문자 수 제한, 디렉토리 안에 들어갈 수 있는 파일의 개수 등 제한
+- fpathconf는 standard i/o, 인자가 다름
+- pathconf는 posix, fpathconf는 iso 표준기구에서 구현한 library

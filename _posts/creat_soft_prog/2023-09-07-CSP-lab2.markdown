@@ -1,0 +1,308 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_CSP_lab2
+title: "LAB : git, gdb"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Creative Software Programming
+# multiple tag entries are possible
+tags: [CSP, LAB]
+# thumbnail image for post
+img: ":csp/post_pic_csp_lab2_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-09-07 09:00:00 +0900
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# LAB : git, gdb
+
+### How to use Terminal
+
+---
+
+**Retrieve file on current directory**
+
+```bash
+$ ls
+```
+
+**Current Location**
+
+```bash
+$ pwd
+```
+
+---
+
+**Directory Type**
+
+-   Normal directory : **\<dir-name\>**
+-   Current directory : **.**
+-   Parent directory : **..**
+-   Root directory : **/**
+-   Home directory : **~**
+
+**Path type**
+
+-   Absolute address : **/\<dir1\>/\<dir2\> ..**
+-   Relative address: : **\<dir1\>/\<dir2\>**
+
+---
+
+**Make directory**
+
+```bash
+$ mkdir <dir-name>
+```
+
+**Change the shell working directory**
+
+```bash
+$ cd <destination directory>
+```
+
+**Remove**
+
+```bash
+$ rm <file-name>
+$ rm -rf <dir-name>
+```
+
+---
+
+**Move source(s) to destination directory**
+
+```bash
+$ mv <source file> <destination directory>
+$ mv <source directory> <destination directory>
+```
+
+**Rename SOURCE to DEST**
+
+```bash
+$ mv <SOURCE> <DEST>
+```
+
+---
+
+**Copy**
+
+```bash
+$ cp <source file> <destination directory>
+$ cp <source file> <destination file>
+$ cp -r <source directory> <destination directory>
+```
+
+---
+
+### Git workflow overview
+
+---
+
+![git workflow overview](:csp/post_pic_csp_lab2_1.png)
+
+**Staging Area** : 버전 관리에 등록, 파일 목록만 관리, 내용은 올리지 않음
+
+**Local Repository** : 수정된 내용까지 현재 버전이 copy가 됨
+
+**fetch** : 커밋된 내용들을 *local repository*로 받아옴 (다운로드)
+
+**merge** : *local repository*에 있는 내용을 *working directory*까지 가져옴 (병합해줌)
+
+**pull** : *fetch*와 *merge*를 한번에 하는 것
+
+**checkout** : *working directory*의 변경사항을 버리고 가장 최근 *local repository*의 backup으로 덮어쓰고 싶을 때 씀
+
+---
+
+**Git : staging**
+
+```bash
+$ git status
+```
+
+현재 *staging area*에서 관리되고 있는 파일 중에 변경내용과, 관리되지 않고 있는 파일들을 보여줌
+
+```bash
+$ git add * // 현재 디렉토리에 있는 변경된 파일만 스테이징
+$ git add . // 현재 디렉토리와 그 하위 디렉토리에 있는 모든 변경된 파일을 스테이징 영역에 추가
+```
+
+---
+
+**Git : unstaging**
+
+```bash
+$ git reset HEAD -- <file>
+```
+
+관리하고 싶지 않은 파일 (ex. 실행파일) 들을 staging area에서 빼줌
+
+---
+
+**Git : commit**
+
+```bash
+$ git commit -m "commit message"
+```
+
+커밋을 할 때는 메시지를 적어주어 무엇을 변경했는지 알림
+
+```bash
+$ git log
+```
+
+모든 커밋 내용을 볼 수 있음
+
+---
+
+**Git : push**
+
+```bash
+$ git push
+```
+
+---
+
+### What is G++
+
+---
+
+**g++** : open-sourced **_C++ compiler_**
+
+**g++ [options] \<infile\> ...**
+
+-   **-c** : compile and assemble, but do not link Create only object file (.o) without creating executable
+-   **-g** : debug info. Contains information necessary for debugging (source code, etc.)
+-   **-o \<outfile\>** : Place the output into \<outfile\>
+-   **-I \<dir\>** : include directory. (directory name to look for headers when compiling)
+-   **-L \<dir\>** : library directory. (Directory name to look for library files when linking)
+-   **-D \<symbol\>[=def]** : define a macro to use at compile time
+-   **...** : There are numerous other options.
+
+---
+
+**Example : Compile & Link**
+
+compile and link the two source file (_main.cc, print.cc_)
+
+```bash
+$ g++ -c -o main.o main.cc
+$ g++ -c -o print.o print.cc
+$ g++ -o hello_world main.o print.o
+```
+
+shortcut
+
+```bash
+$ g++ -o hello_world main.cc print.cc
+```
+
+Run
+
+```bash
+$ ./hello_world
+```
+
+---
+
+### Make
+
+---
+
+**Make** : Build tools that have been around for a long time on Unix operating systems
+
+-   실행파일을 만들 때의 규칙들을 저장해놓고, make하면 필요한 파일만 변경해줌
+
+---
+
+**Makefile**
+
+How to write Makefile
+
+```makefile
+target: prerequisites
+<TAB>command1
+<TAB>command2
+```
+
+Example
+
+```makefile
+hello_world: main.o print.o
+		g++ -o hello_world main.o print.o
+main.o: main.cc
+		g++ -c main.cc
+print.o: print.cc
+		g++ -c print.cc
+clean:
+		rm hello_world main.o print.o
+```
+
+---
+
+**Execute makefile (1) : generate executable file**
+
+```bash
+$ make
+```
+
+**Execute makefile (2) : Remove Excutable file and All object files**
+
+```bash
+$ make clean
+```
+
+---
+
+### GDB
+
+---
+
+디버깅 툴, 프로그램 build할 때 `-g` option 줘야됨
+
+**gdb [options] \<command\>**
+
+-   **\<command\>** : If the current directory is not in your PATH, you must include ./.
+
+-   **Basic command**
+
+**r [arguments]** : Run the given command.
+
+– **bt** : backtrack. Show current call stack status.
+
+– **up/down [steps]** : Move up / down a given step from the current position of the call stack.
+
+– **p \<variable\>** : Display the value of a given variable.
+
+– **q** : exit gdb process.
+
+– Use more easy-to-use improved programs such as **cgdb** and ddd
+
+– **s** : step in (함수로 따라 들어감)
+
+– **n** : next

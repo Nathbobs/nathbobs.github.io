@@ -1,0 +1,74 @@
+# 소유자 개인 정보
+brand: "나타니엘입니다"
+
+# 브랜드 이름 아래의 텍스트
+brand_sub_text: "$site_intro"
+
+# seo meta에서 게시물 작성자로 사용됨 (게시물 내에서 정의되지 않은 경우)
+name: "나타니엘입니다"
+
+# 홈 페이지 상단 헤더 텍스트
+home:
+  # 아래 변수를 line1 및 line2의 대체 텍스트로 사용할 수 있습니다.
+  top_header_line1: "$site_welcome"
+  # 주석 처리하면 상단 헤더가 단일 줄이 됩니다.
+  top_header_line2: "$site_brand"
+
+# 소개 페이지 부제목
+about:
+  sub_title: "$site_intro"
+
+# 저작권 연도를 추가하지 않으려면 주석 처리하거나 비워두세요.
+# 작업에 대한 저작권을 처음 주장한 연도입니다.
+copyright_start_year: "2025"
+
+# creative_commons.enable이 _data/conf/main.yml에 true로 설정되어 있는지 확인하세요.
+creative_commons:
+  # https://creativecommons.org/choose/?lang=ko에서 라이선스를 선택하세요.
+  # 그런 다음 아래 목록과 일치하는지 확인하려면 선택한 라이선스 아래 링크 주소를 확인하세요.
+
+  # 아래 중 하나를 선택하세요.
+  # 1. by        저작자 표시 4.0 국제
+  # 2. by-nd     저작자 표시-변경 금지 4.0 국제
+  # 3. by-sa     저작자 표시-동일 조건 변경 허락 4.0 국제
+  # 4. by-nc     저작자 표시-비영리 4.0 국제
+  # 5. by-nc-nd  저작자 표시-비영리-변경 금지 4.0 국제
+  # 6. by-nc-sa  저작자 표시-비영리-동일 조건 변경 허락 4.0 국제
+  license_type: "by-sa"
+
+# seo meta 공통 설명 (각 언어에 필요)
+# front matter에 meta_description이 정의되지 않은 경우 콘텐츠에서 생성됩니다.
+# 콘텐츠가 없는 경우 이 설명이 페이지 설명으로 사용됩니다. manifest.json에도 사용됩니다.
+meta_common_description: "나타니엘의 개인 포트폴리오 웹사이트입니다. 컴퓨터 소프트웨어 엔지니어링을 전공하고 있으며 백엔드 개발자로 성장하기 위해 노력하고 있습니다."
+
+# 연락처 옵션 (사이드 네비게이션 하단 및 소개 페이지)
+# 항목 순서대로 표시됩니다. 연락처 항목을 제거하려면 주석 처리하세요.
+contacts:
+  - github: "nathbobs"
+  - email: "nathbobs@hanyang.ac.kr"
+  - linkedin: "abegundenathaniel"
+  #- twitter: ""
+  #- mastodon: ""
+  - instagram: "nathbobz"
+  - youtube: "@nathbobs"
+  #- facebook: ""
+# 추가하려면 _data/const/contact.yml 파일을 확인하세요.
+#  - your_new_contact: ""
+
+# google.analytics.ignore가 _data/conf/main.yml과 일치하지 않도록 환경을 설정하세요.
+# id를 제공하지 않으면 이 기능은 비활성화됩니다.
+google_analytics_id: ""
+
+# 웹 페이지를 확인하는 다양한 방법이 있습니다. 메타로 HTML에 추가하는 것이 하나입니다.
+# meta.google_site_verify: true로 설정하세요. _data/conf/main.yml에서 확인하세요.
+# google.site_verification.ignore가 _data/conf/main.yml과 일치하지 않도록 환경을 설정하세요.
+google_site_verification: ""
+
+# contact_form.enable: true로 설정하세요. _data/conf/main.yml에서 확인하세요.
+# - Google Forms에서 양식을 만드세요. "연락처 정보"라는 템플릿을 사용할 수 있습니다.
+# - 양식 색상과 응답 유효성 검사를 필요에 맞게 사용자 정의하세요.
+# - 강제 Google 로그인을 비활성화하려면 "설정 > 응답"으로 이동한 후 "응답 1개로 제한"을 해제하세요.
+# - 오른쪽 상단의 "보내기" 버튼을 클릭하세요.
+# - "보내기" 목록에서 링크 아이콘을 클릭하고 링크를 복사하세요.
+# - 그런 다음 링크를 이중 따옴표 사이에 붙여 넣으세요.
+google_forms_contact_form_url: ""

@@ -1,0 +1,246 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_midterm4
+title: "System Programming Ch5"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, MIDTERM]
+# thumbnail image for post
+img: ":sp/post_pic_sp_midterm4_main.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-10-21 16:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_5
+
+## Stream Orientation
+
+```c
+#include <stdio.h>
+#include <wchar.h>
+int fwide(FILE *fp, int mode);
+```
+
+***wchar.h*** : singlebyte를 쓸지 multibyte를 쓸지 제어할 수 있는 헤더
+
+***singlebyte*** : 1 byte (8bit)로 문자를 표현 가능 한 문자 ⇒ ASCII 코드
+
+***multibyte*** : 한글을 표현하려면 최소 2바이트가 필요함, 이때 쓰는 것
+
+***fwide*** : 파일을 여는 순간 읽을건지 쓸건지 결정하는 stream(통로)이 생김, 그 스트림의 속성, 방향을 지정해 줌, singlebyte로 쓸건지 multibyte로 쓸건지 결정
+
+<br>
+
+## Buffering
+
+```c
+#include <stdio.h>
+void setbuf(FILE *fp, char *buf);
+int setvbuf(FILE *fp, char *buf, int mode, size_t size);
+```
+
+***setbuf*** 
+
+- 버퍼의 사용여부/ 버퍼의 크기를 결정하는 함수
+- char *buf 인자에 null을 넣으면 버퍼링을 안함 ⇒ 버퍼링을 할지 말지도 결정함
+- 사용자 지정 버퍼링
+
+***setvbuf***
+
+- 인자와 모드가 다름
+- mode : _IOFBF, _IOLBF, _IONBF
+- 모드는 시스템에서 제공해주는 것, 시스템에서 정의된 모드를 가져다 씀
+
+***fflush***
+
+```c
+#include <stdio.h>
+int fflush(FILE *fp);
+// A stream or all output streams, if fp is NULL, are flushed
+```
+
+- 버퍼에 있는 것을 다 날림
+- input stream에도 쓸 수 있음
+- 근데 보통 output에 있는 것만 날림
+- 인풋은 사용자입력이므로 오리지널 정보가 훼손된다고 생각해서 잘 flush하지 않음
+- 아웃풋에 있는 것은 모종의 이유가 있어서 아웃풋이 안된 것, 따라서 문제가 있는 것이므로 날림
+
+<br>
+
+## Opening a Stream
+
+
+***fopen*** : 파일을 여는 함수
+
+***freopen*** : 파일을 다시 여는 함수
+
+***fdopen*** : fopen과 동일한 동작, pipe와 network의 관련된 채널에서 사용됨
+
+
+
+***fclose***
+
+- 아웃풋 버퍼를 flush로 다 지우면서 할당되어있던 버퍼를 자동으로 반환하는 함수
+- 닫는다는 키워드 없이 fclose를 물어볼 수도 있음
+
+<br>
+
+## Reading and Writing a Stream
+
+
+***getc*** 
+
+- get character, 문자를 가져옴
+- 메크로처럼 동작
+
+***fgetc*** 
+
+- char를 읽어오는 함수를 통 fgetc로 통일 (fgetc를 호출하면 안에서 getc가 동작됨)
+- 사용자들의 인터페이스를 위해 만든 함수
+
+***getchar*** 
+
+- getc(stdin)과 같음, 인자가 필요없음, 인자가 stdin(표준입력 0)으로 고정
+
+*키보드로부터 입력받는 것을 받아들이겠다 ⇒ getchar*
+
+*파일로부터 한문자씩 읽어들이겠다 ⇒ fgetc*
+
+***ferror*** 
+
+- getc와 같은 함수는 중간에 에러가 났는지, 파일의 끝인지 확인이 안됨
+- 이때 에러가 났는지 확인하기 위해 모니터링하는 함수
+
+***feof*** 
+
+- ferror과 같은 동작
+
+***clearer***
+
+
+
+***ungetc***
+
+- 읽어오는 스트림
+- 읽어오는 queue, 그 버퍼에 다시 넣어줌
+- 문자를 읽고나서 버리는 것이 아니라 도로 반환
+
+***putc***
+
+- char 쓰기(출력)
+
+***fputc***
+
+- 안에서 putc 호출
+
+***putchar***
+
+- stdout, 표준출력(1)을 인자로
+- 모니터에 문자 하나를 출력하는 것으로 고정
+
+<br>
+
+## Line-at-a-Time I/O
+
+
+***fgets***
+
+- 문자열을 입력받을 때 쓰는 함수
+
+***gets***
+
+- 얼마만큼의 양을 받아올 지 인자로 받지 않음
+- 따라서 취약하므로 fgets를 씀
+
+***fputs***
+
+- put string, 문자열을 쓸(출력할) 때 쓰는 함수
+
+***puts***
+
+- fputs와 같은 동작
+- 자동 줄바꿈이 됨
+
+<br>
+
+## Binary I/O
+
+***fread, fwrite***
+
+- 고수준의 입출력
+- 고수준 입출력함수들은 unbuffered의 반대, buffered를 함
+
+<br>
+
+## Positioning a Stream
+
+***ftell***
+
+- 한 char씩 읽어감(getc로), 그때 포인터가 하나씩 움직임
+- 이때 이 포인터가 어디있는지를 알려줌
+- 즉, 몇번째까지 읽었는지 알려줌
+- 디스크립터 내에 파일
+
+***fseek***
+
+- 사용자가 원하는 데로 파일 포인터를 옮겨감
+- 인자 whence (SEEK_SET, SEEK_CUR, SEEK_END)
+
+***rewind***
+
+- 아예 처음으로 파일 포인터를 옮기는 함수
+
+**(단답형)** 디스크립터 내에 파일 포인터가 가리키는 위치를 반환하는 함수 ⇒ **ftell**
+
+**(단답형)** 사용자가 원하는 위치로 파일 디스크립터의 파일 포인터를 옮기는 함수 ⇒ **fseek**
+
+**(단답형)** 디스크립터의 파일 포인터를 제일 처음으로 옮기는 함수 ⇒ **rewind**
+
+***ftello***
+
+- ftell과 같은 역할
+- off_t 의 자료형으로 반환 받음
+
+***fseeko***
+
+- fseek과 같은 역할
+- offset 인수의 자료형이 off_t
+
+***fgetpos***
+
+- ftell과 같은 역할, 디스크립터의 파일 포인터의 위치를 알려줌
+- ftell은 posix, fgetpos는 isoc standard에서 만든 표준
+
+***fsetpos***
+
+- fseek과 같은 역할
+- isoc 표준
+

@@ -1,0 +1,143 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_CG_lab3
+title: "Sending Data to Shaders"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Computer Graphics
+# multiple tag entries are possible
+tags: [CG, Lab]
+# thumbnail image for post
+img: ":cg/post_pic_cg_lab3_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-03-20 17:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 3 LAB : Sending Data to Shaders
+
+# Sending Data using Outs and Ins (Shader → Shader)
+
+## [Code] 1-colored-triangle-outin
+
+- Vertex shader
+
+```python
+#version 330 core
+layout (location = 0) in vec3 vin_pos; 
+**out vec4 vout_color;**
+void main()
+{
+		gl_Position = vec4(vin_pos.x, vin_pos.y, vin_pos.z, 1.0);
+    vout_color = vec4(0,1,0,1); #rgb에서 g만 1 => green color
+}
+```
+
+`out vec4 vout_color` : output variable을 만들어줌
+
+- Fragment shader
+
+```python
+#version 330 core
+**in vec4 vout_color;** 
+out vec4 FragColor; 
+void main()
+{
+    FragColor = vout_color;
+}
+```
+
+`in vec4 vout_color` : 같은 type와 name으로 Input variable 만듦
+
+# Sending Data by Specifying Vertex Attributes
+(Application → Shader)**
+
+## Add More Vertex Attributes
+
+- Add per-vertex color:
+
+```python
+vertices = glm.array(glm.float32, 
+				# position         # color
+				-1.0, -1.0, 0.0,   1.0, 0.0, 0.0, # left vertex 
+				1.0, -1.0, 0.0,    0.0, 1.0, 0.0, # right vertex 
+				0.0, 1.0, 0.0,     0.0, 0.0, 1.0, # top vertex
+)
+```
+
+→ vertex별로 position과 color
+
+## Change in Vertex Shader
+
+- Vertex position: 0
+- Vertex color: 1
+
+```python
+#version 330 core
+
+layout (location = 0) in vec3 vin_pos; 
+layout (location = 1) in vec3 vin_color;
+
+out vec4 vout_color;
+
+void main() {
+		gl_Position = vec4(vin_pos.x, vin_pos.y, vin_pos.z, 1.0);
+		vout_color = vec4(vin_color,1); # you can pass a vec3 and a scalar to vec4 constructor
+}
+```
+
+→ position 받는 layout의 location은 0, color 받는 layout의 location은 1로 해줌 
+
+- fragment shade은 동일
+
+```python
+#version 330 core
+in vec4 vout_color; 
+out vec4 FragColor;
+
+void main() {
+		FragColor = vout_color; 
+}
+```
+
+## Changes in Attributes Configuration
+
+![attributes configuration](:cg/post_pic_cg_lab3_1.png)
+
+```python
+# configure vertex positions - index 0 
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 
+6*glm.sizeof(glm.float32), None) 
+glEnableVertexAttribArray(0)
+
+# configure vertex colors - index 1
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 
+6*glm.sizeof(glm.float32), 
+ctypes.c_void_p(3*glm.sizeof(glm.float32))) 
+glEnableVertexAttribArray(1)
+```

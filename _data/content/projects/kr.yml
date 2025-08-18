@@ -1,0 +1,222 @@
+###########################################################
+#                프로젝트 페이지 데이터
+###########################################################
+page_data:
+    main:
+        header: "프로젝트"
+        info: "프로젝트 둘러보기"
+        text_color: "black"
+        # 배경 이미지를 사용하지 않으려면 주석 처리하세요. 배경 색상(back_color)이 활성화됩니다.
+        img: ":projects-heading.jpg"
+        # back_color: "lightblue"
+        # back_color: "black"
+
+    category:
+        - title: "Python"
+          type: id_python
+          color: "gray"
+        - title: "C"
+          type: id_c
+          color: "#27374D"
+        - title: "Flutter"
+          type: id_flutter
+          color: "black"
+
+
+    list:
+        # 파이썬
+        - type: id_python
+          project_name: "컴퓨터 그래픽스 프로젝트 01"
+          project_excerpt: "기본 OpenGL 뷰어"
+          img: ":cg_project1.png"
+          img_title: "기본 OpenGL 뷰어"
+          date: "2023-04-03"
+          post: |
+              ## [프로젝트 01 : 기본 OpenGL 뷰어](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project1/main.py)
+
+              #### 마우스 움직임으로 카메라 조작
+
+              > 1. **궤도**: 시선을 중심으로 카메라를 회전시킵니다. (Blender의 MMB (마우스 중간 버튼) 기능과 유사)
+              2. **팬**: 카메라와 시선을 좌우 및 상하 방향으로 이동시킵니다. (Blender의 Shift-MMB 기능과 유사)
+              3. **줌**: 카메라를 시선 중심으로 전진(확대) 또는 후진(축소)시킵니다. (Blender의 Ctrl-MMB 기능과 유사)
+              4. 'v' 키를 눌러 **원근 투영 또는 직교 투영**을 토글합니다.
+              5. xz 평면에 **선으로만 된 직사각형 그리드**를 참조 지면으로 그립니다. (Blender와 유사)
+
+        # 파이썬
+        - type: id_python
+          project_name: "컴퓨터 그래픽스 프로젝트 02"
+          project_excerpt: "Obj 뷰어 및 계층적 모델 그리기"
+          img: ":cg_project2.png"
+          img_title: "계층적 모델"
+          date: "2023-04-17"
+          post: |
+              ## [프로젝트 02 : Obj 뷰어 및 계층적 모델 그리기](https://github.com/najiyeon/CSE4020_Computer_Graphics/blob/main/project2/main.py)
+
+              #### 나만의 obj 파일 뷰어 구현
+
+              _1) 단일 로드된 obj 메시 표시 및 2) 로드된 obj 메시로 구성된 계층적 모델의 애니메이션 표시. 렌더링에는 여러 개의 광원을 사용해야 함._
+
+              > **1. 단일 메시 렌더링 모드**
+                - obj 파일을 뷰어 창에 끌어다 놓아 엽니다.
+                - obj 파일을 읽고 정점 위치, 정점 법선, 면 정보만을 사용하여 메시만 표시합니다.
+                - obj 파일을 열 때 obj 파일의 다음 정보를 터미널에 출력합니다.
+
+              > **2. 계층적 모델 애니메이션 렌더링 모드**
+                - 사용자가 뷰어에서 'h' 키를 누르면 프로그램은 "계층적 모델 애니메이션 렌더링 모드"에서 실행되어야 합니다.
+                - 모델은 적어도 3개의 다른 다운로드된 obj 파일에서 로드된 3개의 다른 메시로 구성되어야 합니다.
+                - 모델은 3개의 레벨로 구성된 계층 구조를 가져야 하며 각 노드(단말 노드 제외)는 적어도 2개의 자식 노드를 가져야 합니다.
+                - 모델을 애니메이션화하여 계층 구조를 보여줍니다.
+
+              > **3. 조명 및 기타**
+                - 모든 객체를 Phong 조명과 Phong 음영을 사용하여 렌더링합니다.
+                - 'z' 키를 눌러 와이어프레임 / 솔리드 모드를 토글합니다. (Blender에서 'z' 키를 누르는 것과 유사)
+
+        # C
+        - type: id_c
+          project_name: "컴퓨터 구조론 프로젝트 01"
+          project_excerpt: "LC-2K 어셈블리 언어 및 어셈블러 및 동작 시뮬레이터 및 어셈블리 언어 곱셈"
+          img: ":ca_project1.png"
+          img_title: "어셈블리 언어 곱셈"
+          date: "2023-04-14"
+          post: |
+              ##### [LC-2K 어셈블리 언어 및 어셈블러 & 동작 시뮬레이터 & 어셈블리 언어 곱셈](https://github.com/najiyeon/ITE2031_Computer_Architecture#lc-2k-instruction-set-architecture)
+
+              이 프로젝트는 매우 간단한 어셈블리 언어의 명령어와 프로그램을 기계어로 어셈블하는 방법을 이해하는 데 도움이 됩니다.
+
+              > **1. LC-2K 어셈블리 언어 및 어셈블러**
+                - 이 프로젝트의 첫 번째 부분은 어셈블리 언어 프로그램을 가져와 기계어로 번역하는 프로그램을 작성하는 것입니다.
+
+              > **2. 동작 시뮬레이터**
+                - 이 과제의 두 번째 부분은 모든 유효한 LC-2K 기계 코드 프로그램을 시뮬레이션할 수 있는 프로그램을 작성하는 것입니다.
+
+              > **3. 어셈블리 언어 곱셈**
+                - 이 과제의 세 번째 부분은 두 숫자를 곱하는 어셈블리 언어 프로그램을 작성하는 것입니다.
+
+        # C
+        - type: id_c
+          project_name: "운영체제 프로젝트 01"
+          project_excerpt: "xv6에 간단한 스케줄러 구현"
+          img: ":os_project1.png"
+          img_title: "스케줄러 개요"
+          date: "2023-04-23"
+          post: |
+              #### 프로젝트 01 : xv6에 간단한 스케줄러 구현
+
+              [**프로젝트 1 코드**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project01/xv6-public)
+
+              [**프로젝트 1 위키**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-01)
+
+        # C
+        - type: id_c
+          project_name: "운영체제 프로젝트 02"
+          project_excerpt: "프로세스 관리 및 LWP"
+          img: ":os_project2.png"
+          img_title: "프로세스 관리 : memlim"
+          date: "2023-05-28"
+          post: |
+              #### 프로젝트 02 : 프로세스 관리 및 LWP
+
+              [**프로젝트 2 코드**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project02/xv6-public)
+
+              [**프로젝트 2 위키**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-02)
+
+        # C
+        - type: id_c
+          project_name: "운영체제 프로젝트 03"
+          project_excerpt: "파일 시스템"
+          img: ":os_project3.png"
+          img_title: "삼중간접"
+          date: "2023-06-16"
+          post: |
+              #### 프로젝트 03 : 파일 시스템
+
+              [**프로젝트 3 코드**](https://github.com/najiyeon/ELE3021_Operating_System/tree/master/project03/xv6-public)
+
+              [**프로젝트 3 위키**](https://github.com/najiyeon/ELE3021_Operating_System/wiki/Project-03)
+
+        # C
+        - type: id_c
+          project_name: "컴파일러 프로젝트 01"
+          project_excerpt: "스캐너"
+          img: ":com_project1.png"
+          img_title: "컴파일러 프로젝트 1"
+          date: "2023-10-16"
+          post: |
+              #### 프로젝트 01 : 스캐너
+
+              [**프로젝트 1 코드**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/1_Scanner)
+
+              [**프로젝트 1 위키**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%231-Report)
+
+        # C
+        - type: id_c
+          project_name: "컴파일러 프로젝트 02"
+          project_excerpt: "파서"
+          img: ":com_project2.png"
+          img_title: "컴파일러 프로젝트 2"
+          date: "2023-11-27"
+          post: |
+              #### 프로젝트 02 : 파서
+
+              [**프로젝트 2 코드**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/2_Parser)
+
+              [**프로젝트 2 위키**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%232-Report)
+
+        # C
+        - type: id_c
+          project_name: "컴파일러 프로젝트 03"
+          project_excerpt: "의미 분석"
+          img: ":com_project3.png"
+          img_title: "컴파일러 프로젝트 3"
+          date: "2023-12-19"
+          post: |
+              #### 프로젝트 03 : 의미 분석
+
+              [**프로젝트 3 코드**](https://github.com/najiyeon/2023_ELE4029_Compilers/tree/main/3_Semantic)
+
+              [**프로젝트 3 위키**](https://github.com/najiyeon/2023_ELE4029_Compilers/wiki/Compilers-Project-%233-Report)
+
+        # Flutter
+        - type: id_flutter
+          project_name: "InfoSynth"
+          project_excerpt: "Flutter (Dart), Node를 사용하여 만든 앱"
+          img: ":InfoSynth.png"
+          img_title: "InfoSynth"
+          date: "2024-01-04"
+          post: |
+              #### InfoSynth
+
+              > **앱 개요**
+                - InfoSynth는 편향된 정보에 노출된 사용자가 객관적이고 다양한 관점을 얻을 수 있도록 돕는 애플리케이션입니다. YouTube 비디오를 기반으로 작동하며 사용자는 YouTube 비디오의 URL을 입력하면 앱이 비디오의 스크립트를 크롤링하여 관련된 기사를 제공합니다.
+
+              [**InfoSynth 소스 코드**](https://github.com/InfoSynth/InfoSynth)
+
+        # Flutter
+        - type: id_flutter
+          project_name: "MO HAJI"
+          project_excerpt: "Flutter (Dart), Node.js, MySQL, AWS EC2 및 S3, Google Vision API, OpenAI API, Naver Search API를 사용하여 개발된 앱"
+          img: ":MOHAJI.png"
+          img_title: "MO-HAJI"
+          date: "2024-01-11"
+          post: |
+              #### MO HAJI
+
+              > **앱 개요**
+                - MO HAJI는 음식 사진 하나로 레시피, 알레르기 정보 및 근처 음식점 추천을 제공하는 애플리케이션입니다.
+
+              [**MO-HAJI 소스 코드**](https://github.com/MO-HAJI/MO-HAJI)
+
+        # C#
+        - type: id_csharp
+          project_name: "After School; 3D choorigame"
+          project_excerpt: "Unity (C#)를 사용하여 제작된 앱"
+          img: ":choorigame.png"
+          img_title: "choorigame"
+          date: "2024-01-18"
+          post: |
+              #### After School; 3D choorigame
+
+              > **앱 개요**
+                - "After School; 3D Mystery Game"은 유명한 일본 소설가인 히가시노 게이고의 데뷔 작품 "After School"을 기반으로 한 Unity에서 구현된 3D 미스터리 게임입니다. 잠긴 방의 비밀을 밝히고 범인을 찾기 위해 단서를 확보하세요!
+
+              [**After-School 소스 코드**](https://github.com/After-School-2023/After_School)

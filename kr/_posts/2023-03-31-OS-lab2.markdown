@@ -1,0 +1,644 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_OS_lab2
+title: "Traps and Interrupts"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Operating System
+# multiple tag entries are possible
+tags: [OS, Lab]
+# thumbnail image for post
+img: ":post_pic_os_lab2_main.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-03-31 10:04:30 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+## Interrupt Handling
+
+- OS가 interrupt handling을 위해 지원하는 것
+1. 현재 프로세서의 레지스터 저장 (인터럽트가 끝나고 기존에 수행하고 있던 데로 돌아가야하므로)
+2. kernel mode에서 실행을 위한 준비가 필요 (kernel mode에서 interrupt 동작해야하므로)
+3. interrupt에 대한 정보를 받아낼 수 있어야함
+4. user와 kernel 사이 적절한 isolation 유지 (인터럽트는 커널 모드에서 동작하므로 유저모드가 커널모드에 간섭하지 못하도록 해야함)
+
+## “int n” instruction
+
+- n번째에 해당하는 Interrupt
+
+![n interrupt](:post_pic_os_lab2_1.png)
+
+- **eip register**: 다음에 실행해야할 명령어의 주소를 갖고 있는 레지스터, 다음 stack pointer의 주소를 갖고 있다.
+
+## Interrupt Descriptor Table (IDT)
+
+![IDT](:post_pic_os_lab2_2.png)
+
+- 모든 인터럽트는 각각의 ***entry point***를 가지고 있음
+- entry point는 인터럽트가 실제로 수행이 되는 명령어들의 시작주소
+
+- 맨처음 부팅하게되면 main.c 파일에서 ***tvint()***이라는 함수가 호출,
+- trap vector init이라는 뜻
+
+## Privilege levels in x86
+
+![privilege level in x86](:post_pic_os_lab2_3.png)
+
+- **privilege level**: 현재 동작하고 있는 프로세스가 얼마나 큰 접근 권한을 가지고 있는지
+- xv6에선 **0,3**만 사용
+- 숫자가 작을수록 큰 권한
+- **CPL**은 현재 특권 level, **DPL**은 그 인터럽트를 실행하기 위한 최소 권한 사항
+- 항상 **CPL ≤ DPL**이어야 인터럽트 호출해서 서비스 수행 가능
+
+## Interrupt Procedure
+
+![interrupt procedure](:post_pic_os_lab2_4.png)
+
+- int n이 실행되면 첫번째 IDT로부터 n번째 descriptor 읽어옴
+- **CPL ≤ DPL**이어야 실행할 수 있도록 하고
+- segment descriptor의 PL보다 현재 PL이 더 큰 경우 권한 변경 필요
+- 실제 interrupt의 물리주소를 찾기 위해서는 segment selector에 적힌 주소를 따라가서 offset을 하나 받아오고
+- segment descriptor의 base address와 더해서 실제 주소를 알아냄
+
+## After “int n”
+
+![after int n](:post_pic_os_lab2_5.png)
+
+- 모두 ***altraps*** 으로 jump 하게 됨
+- altrap은 cpu register를 저장하고 트랩을 호출
+- trap은 실제 인터럽트 핸들러가 실행되어야할 인터럽트 실행
+
+## Code
+
+### tvint
+
+- 맨처음 xv6가 부팅이되면
+- main을 호출하고, main은 trap vector init을 하게됨
+
+```c
+void
+tvinit(void)
+{
+  int i;
+
+  for(i = 0; i < 256; i++) //256개의 인터럽트 모두에 대해서 일일이 gate 설정을 하고 초기화
+    SETGATE(idt[i], 0, SEG_KCODE<<3, vectors[i], 0); // 마지막 '0'은 DPL에 해당 (default는 kernel mode)
+  SETGATE(idt[T_SYSCALL], 1, SEG_KCODE<<3, vectors[T_SYSCALL], DPL_USER); //예외적으로 system call은 user mode에서 호출할 수 있도록 3의 값을 넣음
+
+  initlock(&tickslock, "time");
+}
+```
+
+- default값은 모두 kernel mode에 해당하는 0
+- system call만 값을 DPL_USER, 즉 3의 값으로 줌
+
+### Assembly trap handler
+
+- Make를 하게 되면 ***vectors.pl*** 파일에 의해 ***vectors.S*** 파일이 만들어짐
+
+**vectors.S**
+
+```c
+.globl vector0
+vector0:
+  pushl $0
+  pushl $0
+  **jmp alltraps //alltrap으로 jump**
+.globl vector1
+vector1:
+  pushl $0
+  pushl $1
+  **jmp alltraps**
+```
+
+- trap vector들이 정의되어 있다.
+- 각 trap number 마다 짧은 assembly code의 주소들이 들어있는 배열임
+
+**trapsm.S**
+
+- ***vectors.S***에서 jump를 하면 ***trapsm.S***로 옴
+
+```c
+#include "mmu.h"
+
+  # vectors.S sends all traps here.
+.globl alltraps
+alltraps:
+  # Build trap frame.
+  pushl %ds
+  pushl %es
+  pushl %fs
+  pushl %gs //ds, es, fs, gs와 같은 segment 레지스터와
+  pushal //범용 레지스터를 저장
+```
+
+- 이로써 processor는 kernel의 C code를 실행할 수 있게됨
+
+```c
+# Set up data segments.
+  movw $(SEG_KDATA<<3), %ax
+  movw %ax, %ds
+  movw %ax, %es
+
+  # Call trap(tf), where tf=%esp
+  pushl %esp
+  **call trap // 준비가 이제 다 끝났으니 trap을 호출해서 다시 trap.c 파일로 감**
+  addl $4, %esp
+```
+
+### Trap.c
+
+```c
+...
+void
+trap(struct trapframe *tf)
+{
+  **if(tf->trapno == T_SYSCALL){ // system call은 따로 처리**
+    if(myproc()->killed)
+      exit();
+    myproc()->tf = tf;
+    syscall();
+    if(myproc()->killed)
+      exit();
+    return;
+  }
+...
+```
+
+```c
+...
+**switch(tf->trapno){ //나머지는 switch를 통해 해당되는 interrupt 수행**
+  case T_IRQ0 + IRQ_TIMER:
+    if(cpuid() == 0){
+      acquire(&tickslock);
+      ticks++;
+      wakeup(&ticks);
+      release(&tickslock);
+    }
+    lapiceoi();
+    break;
+...
+```
+
+- 만약 존재하지 않는 interrupt가 호출됐다면 예외처리 해줌
+
+```c
+default:
+    if(myproc() == 0 || (tf->cs&3) == 0){
+      **// In kernel, it must be our mistake.**
+      cprintf("unexpected trap %d from cpu %d eip %x (cr2=0x%x)\n",
+              tf->trapno, cpuid(), tf->eip, rcr2());
+      panic("trap");
+    }
+    **// In user space, assume process misbehaved.**
+    cprintf("pid %d %s: trap %d err %d on cpu %d "
+            "eip 0x%x addr 0x%x--kill proc\n",
+            myproc()->pid, myproc()->name, tf->trapno,
+            tf->err, cpuid(), tf->eip, rcr2());
+    myproc()->killed = 1;
+  }
+```
+
+### struct trapframe
+
+**trap.c**
+
+```c
+void
+**trap(struct trapframe *tf) // trap이 호출될 때 프로세서 레지스터의 정보를 담고 있음**
+{
+  if(tf->trapno == T_SYSCALL){
+    if(myproc()->killed)
+      exit();
+    myproc()->tf = tf;
+    syscall();
+    if(myproc()->killed)
+      exit();
+    return;
+  }
+```
+
+![stack](:post_pic_os_lab2_6.png)
+
+- stack은 아래에서 위로 쌓이기 때문에 거꾸로 되어있음
+- 이 프레임은 **x86.h**에 정의되어 있음
+
+**x86.h**
+
+```c
+struct trapframe {
+  // registers as pushed by pusha
+  uint edi;
+  uint esi;
+  uint ebp;
+  uint oesp;      // useless & ignored
+  uint ebx;
+  uint edx;
+  uint ecx;
+  uint eax;
+
+  // rest of trap frame
+  ushort gs;
+  ushort padding1;
+  ushort fs;
+  ushort padding2;
+  ushort es;
+  ushort padding3;
+  ushort ds;
+  ushort padding4;
+  uint trapno;
+
+  // below here defined by x86 hardware
+  uint err;
+  uint eip; //다시 돌아가려면 eip 사용
+  ushort cs;
+  ushort padding5;
+  uint eflags;
+
+  // below here only when crossing rings, such as from user to kernel
+  uint esp;
+  ushort ss; //esp, ss는 previlege level이 바뀔 때만 존재하게됨
+  ushort padding6;
+};
+```
+
+### struc trapframe이 필요한 이유
+
+1. interrupt 후 user process로 돌아갈 때 레지스터를 다시 복구하기 위해서 ***(ex. system call)***
+2. user process의 정보를 커널에서 사용하기 위함 ***(ex. arg*)***
+3. interrupt 후 user process가 다른 방식으로 동작해야 할 때 return 주소를 다른 주소로 바꿈으로써 기존의 flow가 아닌 새로운 flow를 만드는데 사용해야 하기 때문 ***(ex. exec)***
+
+### Trapframe usage - system call
+
+**usys.S**
+
+```c
+...
+#define SYSCALL(name) \
+  .globl name; \
+  name: \
+    **movl $SYS_ ## name, %eax; \ // syscall의 번호를 eax 레지스터에 저장**
+    int $T_SYSCALL; \
+    ret
+...
+SYSCALL(read)
+SYSCALL(write)
+```
+
+**trap.c**
+
+```c
+void
+trap(struct trapframe *tf)
+{
+  if(tf->trapno == T_SYSCALL){
+    if(myproc()->killed)
+      exit();
+    **myproc()->tf = tf; // 현재 프로세스의 trapframe을 이 레지스터의 상태를 본딴 trap frame으로 설정하고**
+    syscall();
+    if(myproc()->killed)
+      exit();
+    return;
+  }
+```
+
+**syscall.c**
+
+```c
+void
+syscall(void)
+{
+  int num;
+  struct proc *curproc = myproc();
+
+  **num = curproc->tf->eax; //eax에 저장되어 있는 값을 가져와서** 
+  if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
+    curproc->tf->eax = syscalls[num](); //그 index에 맞는 syscall 함수를 호출
+  } else {
+    cprintf("%d %s: unknown sys call %d\n",
+            curproc->pid, curproc->name, num);
+    curproc->tf->eax = -1;
+  }
+}
+```
+
+![syscall](:post_pic_os_lab2_7.png)
+
+### Trapframe usage - arg*
+
+**zombie.c**
+
+```c
+if(fork() > 0)
+    **sleep(5);  // Let child exit before parent.**
+  exit();
+```
+
+**user.h**
+
+```c
+**int sleep(int);**
+```
+
+**sysproc.c**
+
+```c
+int
+**sys_sleep(void) //인자가 없음**
+{
+  int n;
+  uint ticks0;
+
+  **if(argint(0, &n) < 0) //인자를 따로 받아오기 위해 argint함수를 사용**
+    return -1;
+  acquire(&tickslock);
+  ticks0 = ticks;
+  while(ticks - ticks0 < n){
+    if(myproc()->killed){
+      release(&tickslock);
+      return -1;
+    }
+    sleep(&ticks, &tickslock);
+  }
+  release(&tickslock);
+  return 0;
+}
+```
+
+![argint](:post_pic_os_lab2_8.png)
+
+***sysproc.c*에서 *argint* 함수를 통해 인자를 받아옴**
+
+argint는 전에 저장해둔 trapframe의 esp값으로, trap이 호출되던 당시 사용되고 있던 stack인 user stack에 접근해서 인자를 받아오게 되는 것
+
+**syscall.c**
+
+```c
+int
+**argint(int n, int *ip) //n번째에 해당하는 인자값을 받아오는 함수**
+{
+  **return fetchint((myproc()->tf->esp) + 4 + 4*n, ip); //전에 저장해둔 trap frame의 esp값, trap이 호출되던 당시 사용되고 있던 stack인 user stack에 접근해서 인자를 받아오게 되는것**
+}
+
+int
+**fetchint(uint addr, int *ip) //trap이 호출되던 당시 사용되고 있던 stack에 접근**
+{
+  struct proc *curproc = myproc();
+
+  if(addr >= curproc->sz || addr+4 > curproc->sz) //해당 주소가 올바른 주소 범위에 있는지 확인
+    return -1;
+  ***ip = *(int*)(addr); //그 주소에 있는 값을 int 형태로 저장해줌**
+  return 0;
+}
+```
+
+### Trapframe usage - modify
+
+- process의 flow를 바꿈
+- **Exec system call**
+
+**exec.c**
+
+```c
+**curproc->tf->eip = elf.entry;  // 밑에 main으로**
+  curproc->tf->esp = sp;
+  switchuvm(curproc);
+  freevm(oldpgdir);
+```
+
+- 원래 프로세스 말고 다른 프로세스로 리턴함
+
+**sh.c**
+
+```c
+...
+int
+**main(void)**
+{
+  static char buf[100];
+  int fd;
+
+  // Ensure that three file descriptors are open.
+  while((fd = open("console", O_RDWR)) >= 0){
+    if(fd >= 3){
+      close(fd);
+      break;
+    }
+  }
+
+  // Read and run input commands.
+  while(getcmd(buf, sizeof(buf)) >= 0){
+...
+```
+
+# practice
+
+- 128번 interrupt를 만들어서 128번 interrupt가 호출되었다는 message를 출력
+
+### prac2_usercall.c
+
+- user program 코드
+
+```c
+#include "types.h"
+#include "stat.h"
+#include "user.h"
+
+int
+main(int argc, cahr *argv[])
+{
+    **__asm__("int $128");** 
+    return 0;
+}
+```
+
+<aside>
+☁️ **asm** 키워드는 인라인 어셈블리어를 사용하는 데에 쓰이는 GCC 컴파일러의 확장 기능
+
+여기서는 어셈블리어로 "int $128"을 사용하고 있고, 이는 소프트웨어 인터럽트를 발생시키는 명령어이다.
+
+</aside>
+
+### prac2_mycall.c
+
+```c
+#include "types.h"
+#include "defs.h"
+#include "param.h"
+#include "memlayout.h"
+#include "mmu.h"
+#include "proc.h"
+#include "x86.h"
+
+void
+mycall(void)
+{ 
+    cprintf("user interrupt 128 called!\n");
+}
+```
+
+### Makefile 수정
+
+```makefile
+UPROGS=\
+	_cat\
+	_echo\
+...
+	_myapp\
+	**_prac2_usercall\ //추가**
+```
+
+```makefile
+OBJS = \
+	bio.o\
+	console.o\
+...
+	prac_syscall.o\
+	**prac2_mycall.o\ //추가**
+```
+
+### defs.h에 함수 원형 추가
+
+```c
+...
+int             copyout(pde_t*, uint, void*, uint);
+void            clearpteu(pde_t *pgdir, char *uva);
+
+//prac_syscall.c
+int myfunction(char*);
+
+**//prac2_mycall.c
+void mycall(void); //추가**
+```
+
+### trap.c
+
+- 128번 인터럽트에대한 처리하는 부분을 추가함
+
+```c
+switch(tf->trapno){
+  case T_IRQ0 + IRQ_TIMER:
+    if(cpuid() == 0){
+...
+case T_IRQ0 + 7:
+  case T_IRQ0 + IRQ_SPURIOUS:
+    cprintf("cpu%d: spurious interrupt at %x:%x\n",
+            cpuid(), tf->cs, tf->eip);
+    lapiceoi();
+    break;
+  **case T_IRQ0 + 128: //switch문에 case 추가
+    mycall();
+    myproc()->killed = 1;
+    break;**
+```
+
+<aside>
+☁️ **T_IRQ0**는 xv6에서 IRQ(Interrupt Request)를 나타내는 정수 값으로, IRQ는 하드웨어 장치에서 발생한 인터럽트를 나타내며, 각 하드웨어 장치는 고유한 IRQ 번호를 가지고 있다. 이때 T_IRQ0는 IRQ 번호의 기준이 되는 값으로, T_IRQ0 이전의 값은 실제 하드웨어 IRQ 번호를 나타내고, T_IRQ0 이후의 값은 가상의 IRQ 번호를 나타낸다. 따라서 **T_IRQ0 + 128**은 가상의 IRQ 번호를 의미하며, 이는 **128번 인터럽트**를 나타낸다.
+
+</aside>
+
+## Trouble Shooting
+
+위와 같이 코드를 만들고 실행했을 때 
+
+![interrupt 13](:post_pic_os_lab2_9.png)
+
+***trap.c***에서 switch 문에서 추가해준 case에 걸리지 않고, default에 걸려 위와 같이 error exception(interrupt 13)이 발생했다.
+
+13번 인터럽트는 일반 보호 오류(general protection fault)를 나타내며, 이 인터럽트가 발생한 이유는 대개 사용자 프로세스가 메모리 접근 등에서 잘못된 동작을 수행한 경우이다.
+
+## 해결
+
+### traps.h
+
+- ***traps.h***에 trapno 값 128 정의
+
+```c
+#define T_USERCALL      128     //prac2_usercall, 128 interrupt
+```
+
+### trap.c
+
+- **T_IRQ0 + 128 대신 T_USERCALL 사용**
+
+```c
+switch(tf->trapno){
+  case T_IRQ0 + IRQ_TIMER:
+    if(cpuid() == 0){
+...
+case T_IRQ0 + 7:
+  case T_IRQ0 + IRQ_SPURIOUS:
+    cprintf("cpu%d: spurious interrupt at %x:%x\n",
+            cpuid(), tf->cs, tf->eip);
+    lapiceoi();
+    break;
+  **case T_USERCALL: //switch문에 case 추가
+    mycall();
+    myproc()->killed = 1; //user program은 반드시 exit을 해줘야함
+    break;**
+```
+
+- 밑에는 조교님 대면 수업에서 코드 exit이랑 뭐가 다른가…
+
+```c
+**case T_USERCALL: //switch문에 case 추가
+    mycall();
+    exit(); //user program은 반드시 exit을 해줘야함
+    break;**
+```
+
+<aside>
+☁️ **`myproc()->killed = 1;`**은 인터럽트 핸들러에서 사용되며, **`exit()`**은 유저 프로그램에서 사용됩니다.
+
+일반적으로 유저 프로그램에서 **`myproc()->killed = 1;`**를 직접 사용해서 프로세스를 종료하는 것은 권장되지 않습니다. 그 이유는 **`killed`** 변수가 인터럽트 핸들러에서 사용되기 때문입니다. 유저 프로그램에서 이 변수를 변경하면 인터럽트 핸들러에서 예상치 못한 동작이 발생할 수 있습니다.
+
+또한, 유저 프로그램은 **`exit()`** 시스템 콜을 통해 종료되어야 합니다. 이는 프로세스가 자원을 올바르게 정리하고, 부모 프로세스에게 종료 상태를 알리는 등의 작업을 수행하기 때문입니다. **`exit()`** 함수는 또한 C 라이브러리에 정의된 함수이므로, 유저 프로그램에서 쉽게 사용할 수 있습니다.
+
+따라서, 유저 프로그램에서는 **`exit()`** 함수를 사용하여 프로세스를 종료해야 하며, **`myproc()->killed = 1;`**과 같은 코드는 인터럽트 핸들러에서 사용해야 합니다.
+
+</aside>
+
+- **IDT** 테이블의 **T_USERCALL**을 아래와 같이 코드를 추가하여 설정
+
+```c
+void
+tvinit(void)
+{
+  int i;
+
+  for(i = 0; i < 256; i++)
+    SETGATE(idt[i], 0, SEG_KCODE<<3, vectors[i], 0);
+  SETGATE(idt[T_SYSCALL], 1, SEG_KCODE<<3, vectors[T_SYSCALL], DPL_USER);
+
+  **SETGATE(idt[T_USERCALL], 1, SEG_KCODE<<3, vectors[T_USERCALL], DPL_USER); // 128 interrupt**
+```
+
+**[정상 작동된 화면]**
+
+![correct execution](:post_pic_os_lab2_10.png)
+

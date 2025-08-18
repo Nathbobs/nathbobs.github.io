@@ -1,0 +1,152 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_CN_final2
+title: "Computer Network Chapter 15"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Computer Network
+# multiple tag entries are possible
+tags: [CN, FINAL]
+# thumbnail image for post
+img: ":post_pic_cn_final2_1.jpeg"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-12-18 17:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# Chapter 15) Transmission Control Protocol
+
+## Three-way handshaking
+
+![three-way handshaking](:post_pic_cn_final2_1.jpeg){:width="700px"}
+
+<aside>
+☁️ TCP는 장치들 사이에 논리적인 접속을 성립하기 위하여 three-way handshake를 사용한다.
+
+Client > Server : TCP SYN
+
+Server > Client : TCP SYN ACK
+
+Client > Server : TCP ACK
+
+</aside>
+
+*1) 클라이언트는 서버에 접속을 요청하는 SYN 패킷을 보낸다. (클라이언트 SYN_SENT)*
+
+*2) 서버는 SYN 요청을 받고 클라이언트에게 요청을 수락한다는 ACK와 SYN flag가 설정된 패킷을 발송하고 클라이언트가 다시 ACK로 응답하기를 기다린다. (서버 SYN_RECIEVED)*
+
+*3) 클라이언트가 서버에게 ACK를 보낸 후 연결이 이루어지고 데이터가 오간다. (서버 ESTABLISHED)*
+
+⇒ 위와 같은 방식으로 통신하는 것이 신뢰성 있는 연결을 맺어 준다는 tcp의 3 way handshake 방식이다. 
+
+## State transition diagram(상태천이도)
+
+![state transition diagram](:post_pic_cn_final2_2.jpeg){:width="700px"}
+
+## Error Control
+
+- 손실(loss)는 error또는 congestion에서 발생
+- 유선망은 에러가 없고 congestion만 발생
+- 무선망은 에러와 congestion 둘다 발생
+
+### ACK 전략 (6가지 Rule)
+
+- ***Rule 1) piggyback*** : 데이터를 보낼 때는 항상 ACK 정보를 첨부한다. 트래픽이 오가는 것을 최소화.
+- ***Rule 2) 500ms TO*** : 데이터 세그먼트를 1개 수신한 이후 500ms이 지난 후에 explicit ACK를 전송한다. 트래픽 감소용.
+- ***Rule 3) delayed ACK*** : 수신한 데이터의 세그먼트가 2개가 누적되면 500ms를 기다리지 않고 즉각 explicit ACK 전송
+- ***Rule 4) Gap*** : 순서가 맞지 않는 세그먼트가 먼저 도착할 경우 즉각 explicit ACK를 전송
+- ***Rule 5) filed*** : 분실 세그먼트를 받을 경우 즉각 explicit ACK 전송
+- ***Rule 6) 중복 data*** : 중복 세그먼트를 받을 경우 즉각 explicit ACK 전송
+
+### ACK 손실에서 deadlock이 걸리는 경우
+
+- rwnd가 0이 아닌 ACK의 분실로 sender와 reciever 모두 기다리기만 하는 deadlock이 발생했다.
+
+![deadlock](:post_pic_cn_final2_3.jpeg){:width="700px"}
+
+- 해결 방법은 persistence timer를 이용한다.
+- sender가 rwnd=0 ACK를 받으면 타이머를 켜두고, 타이머가 expired되면 probe를 보낸다. 그러면 reciever는 ACK에 rwnd값을 담아 보낸다.
+
+### Silly Window Syndorme
+
+- 'A'라는 문자 하나를 보낸다고 가정하자. 이를 보내기 위해서는 TCP header가 필요하다. header는 20 byte, data는 1byte, IP도 20 byte, 프레임으로 가면 MAC header도 필요하다. 우선 이것만 가정해도 1byte를 보내기 위해서는 많은 byte가 필요하다. 이러한 문제점이 송신 측에서 발생하는 syndrome이고, 보내는 데이터에 비해 header의 크기가 훨씬 큰 경우를 silly window syndrome이라고 한다.
+
+![silly window syndorme](:cn/post_pic_cn_final2_4.png){:width="700px"}
+
+- 'A' 문자를 보내고 서버로부터 ACK이 올 때를 생각해보자. nagle 알고리즘에서는 첫 번째 데이터는 그냥 보내고, 보낼 데이터가 MSS 만큼 쌓이면 상대한테 보낸다. MSS보다 작을 경우네는 보낸 데이터에 대한 ACK을 기다린다. ACK이 오기 전까지는 대기시켜두고, ACK이 오면 데이터를 전송한다.
+- MSS는 Maximum Segment Size의 약자이고, 이는 정의된 크기이다.
+
+## Congestion Control (혼잡 제어)
+
+![congestion control](:cn/post_pic_cn_final2_5.png){:width="700px"}
+
+- 위 그림과 같이 각 TCP connection 1,2가 100Mbps의 용량으로 데이터를 보내고, router에서 나가는 데이터가 100Mbps이면, 들어오는 데이터는 200Mbps인데 나가는 데이터가 100Mbps이므로 병목현상이 일어난다.
+
+<aside>
+☁️ cwnd
+
+- Increase : ***Slow Start(Exponential Increase), Congestion Avoidence(Additive Increase)***
+- Decrease : ***Multiplicative Decrease***
+</aside>
+
+(cwnd는 sender가 관리)
+
+- cwnd를 1개씩 점점 늘리는 것을 **additive increase** 라고 부르고, 혼잡한 상황에서 줄이는 것을 **congestion avoidance** 라고 부른다.
+- **Exponential increase**는 window size를 2배 씩 늘린다. 이에 대해 늘리는 과정은 **slow start**
+라고 부른다. 2배씩 늘리는데 이름이 slow start인 이유는 flow control 보다 느리기 때문이다.
+
+![congestion control](:post_pic_cn_final2_6.jpeg){:width="700px"}
+
+- 무작정 2배씩 늘려서 보내는 것은 아니다. threshold size를 넘어가면 additive increasing으로 전환하여 보낸다. 마찬가지로 혼잡해지면 size는 절반으로 줄어든다.
+
+![congestion control](:post_pic_cn_final2_7.jpeg){:width="700px"}
+
+- slow start를 통해 2배씩 window size를 증가시키고, **sshtresh**를 만나게 되면 멈춘다. 이때 딱 정해진 window size에서 멈춘다. 그 후 Congestion avoidance 과정이 되는데, 여기서는 additive increase를 한다. 여기서 혼잡이 발생하게 되면 window size를 절반으로 줄인다.
+- **3 duplicate ACK**을 혼잡 상태로 간주한다.
+
+## TCP Timers
+
+### 1) Retransmission timer
+
+- Time-out 발생하는 것을 detect 하는 역할. 보통 3-duplicated ACK으로도 탐색을 할 수 있지만, Time-out으로도 packet loss에 대해 탐색이 가능하다. Time-out을 만나면 slow start로 바뀐다.
+
+![retransmission timer](:cn/post_pic_cn_final2_8.png)
+
+- 여기서 RTTs는 평균, RTTd는 편차라고 이해하면 된다.
+
+![tcp timers](:cn/post_pic_cn_final2_9.png)
+
+- 이런식으로 가중치를 두면서 평균을 구하는 것을 EWMA라고 부른다.
+- 여기서 RTTm은 새로 측정한 값이고, RTTs는 이전 값이다.
+- 처음 측정을 시작하면 첫 값을 RTTs라고 두고 사용한다.
+- α 값은 1/8로 두고 사용한다
+
+![tcp timers](:cn/post_pic_cn_final2_10.png)
+
+- 편차에 대해서도 가중치를 적용한다. β값은 1/4이다.
+- 만약 첫 번째 측정인 경우 RTTd=RTTm/2로 설정한다.

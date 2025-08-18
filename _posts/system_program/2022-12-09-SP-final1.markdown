@@ -1,0 +1,194 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_SP_final1
+title: "System Programming Ch7 - Ch8"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: System Programming
+# multiple tag entries are possible
+tags: [SP, FINAL]
+# thumbnail image for post
+img: ":sp/post_pic_sp_final1_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2022-12-09 15:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# 💡 Chap_7
+
+## Memory Layout of a C Program
+
+![memory layout](:sp/post_pic_sp_final1_1.png){:width="700px"}
+
+☁️ ***Memory Layout (가상 메모리 구조)***
+
+- ***high address*** : 커널이 있음
+- ***stack*** : 커널을 침번하면 안되기 때문에 스택은 아래로만 자란다. 
+주로 지역변수(메소드 안으로 국한됨), main 함수(사용자가 만든 함수) 내의 변수가 저장되는 구조
+- ***heap*** : 스택과는 반대로 위로만 자람, 스택과 힙은 서로 만나는 구조로 되어있으면서 커널에 절대 침범하지 않게 되어있다. 
+사용자 메모리 영역, 동적할당이 가능한 메모리
+- ***unitialized data & initialized data*** : 합쳐서 데이터 영역
+- ***text*** : 레지스터 값들의 집합
+
+<br>
+
+## Memory Allocation
+
+☁️ *동적할당과 관련된 함수*
+
+- ***malloc*** : memory allocation
+- ***calloc*** : malloc과 인자 다름(단순히 인자만 다른것은 X)
+
+```c
+char* hi (char*)malloc(sizeof(char)*4); //malloc은 선언하면 쓰레기값 들어감
+char* aloha (char*)calloc(sizeof(char), 4); //calloc은 0으로 다 초기화 해줌
+```
+
+- ***realloc*** : retry allocation, 이미 만들어진 동적할당 메모리에 추가적으로 만들어주거나 줄여주는 역할(재할당), 이미 만들어진 동적할당 메모리를 수정하는 것
+- ***free*** : 메모리를 해제할 때 호출하는 함수
+
+→ 메모리 해제 안해준 것이 쌓이면 메모리 누수가 생김, c나 c++은 사용자가 free를 꼭 해줘야함, free 안해주고 동적할당을 계속 하고 쓰면 leak, 즉 메모리 누수가 발생한다. 
+
+- ***alloca*** : stack에다가 동적할당을 해주는 함수, 필요한 이유는 stack은 프로그램이 끝나면 알아서 free를 해주니까
+
+<br>
+
+## *setjmp* and *longjmp* Function
+
+☁️ (시험문제를 관통하는 개념, chap_10과 연관)
+
+- ***setjmp*** : 깃발을 꽂고
+- ***longjmp*** : longjmp를 만나면 setjmp로 돌아감
+
+```c
+#include "apue.h"
+#include <setjmp.h>
+
+jmp_buf jmpbuffer; //jmpbuffer는 지금 status를 저장하고 있음, 자료형은 jmp_buf
+
+int main(void) {
+		char line[MAXLINE];
+		
+		if(setjmp(jmpbuffer) != 0) //setjmp함수 만남, 깃발을 꽂음
+				printf("error");
+		while(fgets(line, MAXLINE, stdin) != NULL)
+				do_line(line);
+		exit(0);
+}
+
+...
+
+void cmd_add(void) {
+		int token;
+		
+		token = get_token();
+		if(token < 0)  /* an error has occured */
+				longjmp(jmpbuffer,1); //setjmp 위치로 점프하게됨, setjmp의 반환값은 1
+		/* rest of processing for this command */
+}
+```
+
+<br>
+
+# 💡 Chap_8
+
+## *fork, vfork* Function
+
+☁️ 흔히 쓰는 포크 생각하면 됨
+
+- ***fork*** : 부모 프로세스와 똑같은 자식 프로세스를 복사해서 만드는 함수, *copy-on-write,*
+    
+    the child is copy of the parent, 모든 메모리 영역을 그대로 카피함 → 오래걸림
+    
+- ***vfork*** : 부모 프로세스가 가지고 있는 것을 모두다 복사하지 않고 일부만 복사해서 자식프로세스를 만드는 함수
+
+<br>
+
+## *wait* and *waitpid* Function
+
+☁️ 부모 프로세스에서 자식 프로세스의 상태를 확인하고 싶을 때 아래와 같은 코드를 짬
+
+```c
+#include "apue.h"
+#include <sys/wait.h>
+int main(void)
+{
+   pid_t pid;
+   int status;
+   if ((pid = fork()) < 0) //에러
+			err_sys("fork error");
+   else if (pid == 0) // 0일때 child
+      exit(7);
+	 //0보다 큰 양수일 때는 부모 프로세스만 봐라
+   if (wait(&status) != pid) // wait for child, 자식프로세스가 끝날때까지
+      err_sys("wait error");
+   pr_exit(status); // and print its status
+
+...
+
+}
+```
+
+- fork 함수로 자식프로세스를 만들고 나면 같은 코드 안에서 분기가 하나 더 생기는 것임
+- wait(&status), 자식프로세스의 상태를 물어보고, 자식 프로세스가 끝날때까지 기다리는 함수
+자식 프로세스가 끝나면 상태 반환해줌
+- pr_exit(status), status 값을 찍어주는 것
+
+<br>
+
+## *exec* Function
+
+☁️ (단답형 단골, 이해하면 됨)
+
+```c
+#include <unistd.h>
+int execl(const char *pathname, const char *arg0, … /* (char *) 0 */);
+int execv(const char *pathname, char *const argv[]);
+int execle(const char *pathname, const char *arg0, … /* (char *) 0, char *const envp[] */);
+int execve(const char *pathname, char *const argv[], char *const envp[]);
+int execlp(const char *filename, const char *arg0, … /* (char *) 0 */);
+int execvp(const char *filename, char *const argv[]);
+```
+
+exec는 모두 동일, exec는 fork함수와 연계되어 많이 쓰이는 뭔가를 수행하는 함수
+
+- ***execl*** : list of argument, 인자가 리스트인 실행함수
+- ***execv*** : 인자가 벡터로 넘어가는 실행함수
+- ***execle*** : 인자가 환경변수하고 리스트가 넘어가는 실행함수
+- ***execve*** : 인자가 환경변수와 벡터가 넘어가는 실행함수
+- ***execlp*** : 인자가 파일네임과 변수가 넘어가는 실행함수
+- ***execvp*** : 인자가 파일네임과 벡터가 넘어가는 실행함수
+
+<br>
+
+## *system* Fucntion
+
+☁️ 인자로 넘어온 shell에서 치는 명령어
+
+- 터미널 같은 쉘에서 친 명령어를 그대로 인자로 받아서 어플리케이션을 실행할 수 있도록 도와주는 메소드
+- shell 명령어를 문자열로 받아서 실행시켜주는 함수

@@ -1,0 +1,129 @@
+---
+# multilingual page pair id, this must pair with translations of this page. (This name must be unique)
+lng_pair: id_OS_setting1
+title: "Managing xv6 with Docker"
+
+# post specific
+# if not specified, .name will be used from _data/owner/[language].yml
+author: Jiyeon Na
+# multiple category is not supported
+category: Operating System
+# multiple tag entries are possible
+tags: [OS, Lab, Setting]
+# thumbnail image for post
+img: ":os/post_pic_os_setting1_1.png"
+# disable comments on this page
+#comments_disable: true
+
+# publish date
+date: 2023-03-10 11:00:00 +0900
+
+# seo
+# if not specified, date will be used.
+#meta_modify_date: 2022-01-01 10:04:30 +0900
+# check the meta_common_description in _data/owner/[language].yml
+#meta_description: ""
+
+# optional
+# please use the "image_viewer_on" below to enable image viewer for individual pages or posts (_posts/ or [language]/_posts folders).
+# image viewer can be enabled or disabled for all posts using the "image_viewer_posts: true" setting in _data/conf/main.yml.
+#image_viewer_on: true
+# please use the "image_lazy_loader_on" below to enable image lazy loader for individual pages or posts (_posts/ or [language]/_posts folders).
+# image lazy loader can be enabled or disabled for all posts using the "image_lazy_loader_posts: true" setting in _data/conf/main.yml.
+#image_lazy_loader_on: true
+# exclude from on site search
+#on_site_search_exclude: true
+# exclude from search engines
+#search_engine_exclude: true
+# to disable this page, simply set published: false or delete this file
+#published: false
+---
+
+# LAB 1 : xv6
+
+# Install Docker (macOS)
+
+- Install Docker, 본인 OS에 맞춰 설치
+
+[https://docs.docker.com/desktop/install/mac-install/](https://docs.docker.com/desktop/install/mac-install/)
+
+- Docker → Resources → ADVANCED
+    
+    ![Docker](:os/post_pic_os_setting1_1.png){:width="700px"}
+    
+
+- 본인 mac 사양에 맞춰 설정
+
+- Terminal 실행 후, docker 설치 확인
+
+```bash
+docker --version
+```
+
+# Run xv6 on Docker (macOS)
+
+- OS 폴더 생성, 폴더로 이동 후 다운받은 os_xv6.tar (lms 다운로드) 파일을 해당 위치에 저장
+    
+    ![run xv6](:os/post_pic_os_setting1_2.png){:width="700px"}
+    
+
+### Run xv6
+
+- 터미널에 명령어 순서대로 실행
+
+```bash
+docker load -i os_xv6.tar
+docker image
+```
+
+- 명령어 순서대로 실행하여 container가 실행되었는지 확인
+
+```bash
+docker run -it --name ele3021 os_xv6
+root@xxx: /OS# exit
+docker ps -a
+```
+
+- Container 종료 커맨드 : **[Ctrl] + [D] or exit**
+- Container background 상태로 전환 : **[Ctrl] + [P] + [Q]** (순서대로 입력)
+
+- 만약 container가 완전히 꺼져 있다면,
+
+```bash
+docker start ele3021
+docker attach ele3021
+```
+
+- container가 background에서 실행 중이라면,
+
+```bash
+docker attach ele3021
+```
+
+- container가 꺼져있는지, background에서 실행 중인지 확인하려면,
+
+```bash
+#container가 꺼져있으면 확인 불가
+docker ps
+
+#STATUS 확인
+docker ps -a
+```
+
+### xv6 실행
+
+- xv6-public/로 이동후
+
+```bash
+make
+make fs.img
+qemu-system-i386 -nographic -serial mon:stdio -hdb fs.img xv6.img -smp 1 -m 512
+```
+
+xv6 종료 : **[Ctrl] + [A], [X]** (순서대로 입력)
+
+→ shell script ***bootxv6.sh*** 만들었으면 이걸로 실행 가능
+
+```bash
+./bootxv6.sh
+```
