@@ -92,6 +92,21 @@ page_data:
               ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
 
 
+          # Flutter
+        - type: id_flutter
+          project_name: "PetMeeting"
+          project_excerpt: "A Platform for Pets and Owners to meet"
+          img: ":cg_project1.png"
+          img_title: "basic opengl viewer"
+          date: "2025-07-21"
+          post: |
+              ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
+
+              > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
+              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
+              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+
+
         # # python
         # - type: id_python
         #   project_name: "Computer Graphics Project 01"
