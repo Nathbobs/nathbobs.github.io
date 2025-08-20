@@ -28,82 +28,82 @@ page_data:
           type: id_agents
           color: "#27374D"
 
-    list:
-          # python
-        - type: id_python
-          project_name: "Kraken Cryptocurrency Exchange Project"
-          project_excerpt: "RESTful API integration"
-          img: ":cg_project1.png"
-          img_title: "basic opengl viewer"
-          date: "2025-07-21"
-          post: |
-              ## [Kraken Crypto Exchange Project : RESTful API integration - Link](https://github.com/Nathbobs/Computer_Networks/tree/main/Assignment_2)
+list:
+      # python
+    - type: id_python
+      project_name: "Kraken 암호화폐 거래소 프로젝트"
+      project_excerpt: "RESTful API 통합"
+      img: ":cg_project1.png"
+      img_title: "기본 OpenGL 뷰어"
+      date: "2025-07-21"
+      post: |
+          ## [Kraken 암호화폐 거래소 프로젝트 : RESTful API 통합 - 링크](https://github.com/Nathbobs/Computer_Networks/tree/main/Assignment_2)
 
-              > ●	Implemented API authentication and HTTP communication with Kraken cryptocurrency exchange using RESTful in Python and Go.
-              ●	Developed scripts to retrieve account balances, place sell orders with secure server authentication and measure API response time
-              ●	**Technologies:** Python, RESTful APIs, HTTP, JSON, Network Protocols, Cryptography
-          
-          # 3D & Computer Vision
-        - type: id_3d
-          project_name: "3D Scene Reconstruction from multiple Images - Graduation Project "
-          project_excerpt: "3D Scene Reconstruction from multiple Images (NeRF and 3D Gaussian Splatting) "
-          img: ":cg_project1.png"
-          img_title: "basic opengl viewer"
-          date: "2025-03-01"
-          post: |
-              ## [Graduation Project :  - Link](https://github.com/Nathbobs/Graduation_Capstone)
+          > ●	Python과 Go를 사용하여 Kraken 암호화폐 거래소와의 RESTful API 인증 및 HTTP 통신을 구현  
+          ●	계정 잔액 조회, 보안 서버 인증을 통한 매도 주문 실행 및 API 응답 시간 측정 스크립트 개발  
+          ●	**기술 스택:** Python, RESTful API, HTTP, JSON, 네트워크 프로토콜, 암호학
+      
+      # 3D & Computer Vision
+    - type: id_3d
+      project_name: "다중 이미지 기반 3D 장면 재구성 - 졸업 프로젝트"
+      project_excerpt: "다중 이미지 기반 3D 장면 재구성 (NeRF 및 3D Gaussian Splatting)"
+      img: ":cg_project1.png"
+      img_title: "기본 OpenGL 뷰어"
+      date: "2025-03-01"
+      post: |
+          ## [졸업 프로젝트 : - 링크](https://github.com/Nathbobs/Graduation_Capstone)
 
-              > ●  Built a 3D reconstruction pipeline using NeRF, capturing scenes and rendering 3D outputs from multi-view images.
-              ●  Collected and processed real datasets, and customized camera path generation for dynamic video renders using spiral and interpolation techniques.
-              ●  Fixed compatibility issues to enable full pipeline execution on Google Colab with GPU acceleration.
-              ●  **Technologies**: NeRF, Nerfstudio, Python, PyTorch, Colab, 3D Gaussian Splatting, OpenCV, CUDA
+          > ●  NeRF를 활용한 3D 재구성 파이프라인 구축, 다중 뷰 이미지를 기반으로 장면 캡처 및 3D 출력 렌더링  
+          ●  실제 데이터셋 수집 및 처리, 나선형·보간 기법을 통한 동적 비디오 렌더를 위한 사용자 지정 카메라 경로 생성  
+          ●  Google Colab GPU 가속 환경에서 전체 파이프라인 실행이 가능하도록 호환성 문제 해결  
+          ●  **기술 스택**: NeRF, Nerfstudio, Python, PyTorch, Colab, 3D Gaussian Splatting, OpenCV, CUDA
 
-         
-         # 3D & Computer Vision
-        - type: id_3d
-          project_name: "Sign Language Detection"
-          project_excerpt: "Sign Language Detection - Computer Vision "
-          img: ":cg_project1.png"
-          img_title: "basic opengl viewer"
-          date: "2024-07-21"
-          post: |
-              ## [Sign Language Detection (Personal Project) - Link](https://github.com/Nathbobs/CV_Projects/tree/main/signLanguage_Project)
+     
+     # 3D & Computer Vision
+    - type: id_3d
+      project_name: "수화 인식"
+      project_excerpt: "수화 인식 - 컴퓨터 비전"
+      img: ":cg_project1.png"
+      img_title: "기본 OpenGL 뷰어"
+      date: "2024-07-21"
+      post: |
+          ## [수화 인식 (개인 프로젝트) - 링크](https://github.com/Nathbobs/CV_Projects/tree/main/signLanguage_Project)
 
-              > ●	Implemented a hand landmark detection system using MediaPipe to track sign language gestures for real-time recognition.
-              ●	Built a custom sign gesture classification model using a Random Forest Classifier, trained on a hand-collected dataset.
-              ●	Utilized OpenCV to extract and preprocess hand gestures from live video streams.
-              ●	Constructed a custom dataset for model training and validation, capturing diverse sign language samples.
-              ●	Successfully implemented real-time landmark tracking; ongoing efforts focused on improving gesture prediction accuracy and model performance.
-        
+          > ●	MediaPipe를 활용하여 손 랜드마크 탐지를 구현, 실시간 수화 동작 추적 및 인식  
+          ●	직접 수집한 데이터셋을 활용하여 랜덤 포레스트 분류기를 이용한 맞춤형 수화 제스처 분류 모델 구축  
+          ●	OpenCV를 사용해 실시간 비디오 스트림에서 손 동작 추출 및 전처리 수행  
+          ●	다양한 수화 샘플을 수집하여 학습 및 검증용 맞춤형 데이터셋 구축  
+          ●	실시간 랜드마크 추적에 성공, 현재는 제스처 예측 정확도 및 모델 성능 향상에 집중  
 
-          # Agentic AI
-        - type: id_agents
-          project_name: "StartupAI"
-          project_excerpt: "AI-Powered Business Analysis Agent"
-          img: ":cg_project1.png"
-          img_title: "basic opengl viewer"
-          date: "2025-07-21"
-          post: |
-              ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
+      # Agentic AI
+    - type: id_agents
+      project_name: "StartupAI"
+      project_excerpt: "AI 기반 비즈니스 분석 에이전트"
+      img: ":cg_project1.png"
+      img_title: "기본 OpenGL 뷰어"
+      date: "2025-07-21"
+      post: |
+          ## [StartupAI: AI 기반 비즈니스 분석 에이전트 - 링크](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
 
-              > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
-              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
-              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+          > ●	LangGraph와 OpenAI를 활용하여 스타트업 비즈니스 기획 자동화를 위한 멀티 에이전트 시스템 개발  
+          ●	Tavily Search 기반의 RAG 파이프라인을 구현, 실시간 데이터 검색을 통해 에이전트가 시장 분석, 재무 예측, 기술 로드맵을 단일 사용자 프롬프트로 생성 가능  
+          ●	**기술 스택**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
 
 
-          # Flutter
-        - type: id_flutter
-          project_name: "PetMeeting"
-          project_excerpt: "A Platform for Pets and Owners to meet"
-          img: ":cg_project1.png"
-          img_title: "basic opengl viewer"
-          date: "2025-07-21"
-          post: |
-              ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
+      # Flutter
+    - type: id_flutter
+      project_name: "PetMeeting"
+      project_excerpt: "반려동물과 보호자가 만나는 플랫폼"
+      img: ":cg_project1.png"
+      img_title: "기본 OpenGL 뷰어"
+      date: "2025-07-21"
+      post: |
+          ## [StartupAI: AI 기반 비즈니스 분석 에이전트 - 링크](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
 
-              > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
-              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
-              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+          > ●	LangGraph와 OpenAI를 활용하여 스타트업 비즈니스 기획 자동화를 위한 멀티 에이전트 시스템 개발  
+          ●	Tavily Search 기반의 RAG 파이프라인을 구현, 실시간 데이터 검색을 통해 에이전트가 시장 분석, 재무 예측, 기술 로드맵을 단일 사용자 프롬프트로 생성 가능  
+          ●	**기술 스택**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+
 
 
 
