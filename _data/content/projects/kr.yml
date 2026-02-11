@@ -66,8 +66,8 @@ page_data:
         
         # 3D & Computer Vision
         - type: id_3d
-          project_name: "수화 인식"
-          project_excerpt: "수화 인식 - 컴퓨터 비전"
+          project_name: "수화 인식 (Sign Language Detection)"
+          project_excerpt: "수화 인식 (Sign Language Detection)- 컴퓨터 비전"
           img: ":cg_project1.png"
           img_title: "기본 OpenGL 뷰어"
           date: "2024-07-21"
