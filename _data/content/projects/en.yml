@@ -41,8 +41,10 @@ page_data:
               ## [Kraken Crypto Exchange Project : RESTful API integration - Link](https://github.com/Nathbobs/Computer_Networks/tree/main/Assignment_2)
 
               > ●	Implemented API authentication and HTTP communication with Kraken cryptocurrency exchange using RESTful in Python and Go.
-              ●	Developed scripts to retrieve account balances, place sell orders with secure server authentication and measure API response time
-              ●	**Technologies:** Python, RESTful APIs, HTTP, JSON, Network Protocols, Cryptography
+              >
+              > ●	Developed scripts to retrieve account balances, place sell orders with secure server authentication and measure API response time
+              >
+              > ●	**Technologies:** Python, REST APIs, FastAPI, HMAC authentication.
           
           # 3D & Computer Vision
         - type: id_3d
@@ -55,9 +57,12 @@ page_data:
               ## [Graduation Project :  - Link](https://github.com/Nathbobs/Graduation_Capstone)
 
               > ●  Built a 3D reconstruction pipeline using NeRF, capturing scenes and rendering 3D outputs from multi-view images.
-              ●  Collected and processed real datasets, and customized camera path generation for dynamic video renders using spiral and interpolation techniques.
-              ●  Fixed compatibility issues to enable full pipeline execution on Google Colab with GPU acceleration.
-              ●  **Technologies**: NeRF, Nerfstudio, Python, PyTorch, Colab, 3D Gaussian Splatting, OpenCV, CUDA
+              >
+              > ●  Collected and processed real datasets, and customized camera path generation for dynamic video renders using spiral and interpolation techniques.
+              >
+              > ●  Fixed compatibility issues to enable full pipeline execution on Google Colab with GPU acceleration.
+              >
+              > ●  **Technologies**: NeRF, Nerfstudio, Python, PyTorch, Colab, 3D Gaussian Splatting, OpenCV, CUDA, Segmentation.
 
          
          # 3D & Computer Vision
@@ -71,11 +76,16 @@ page_data:
               ## [Sign Language Detection (Personal Project) - Link](https://github.com/Nathbobs/CV_Projects/tree/main/signLanguage_Project)
 
               > ●	Implemented a hand landmark detection system using MediaPipe to track sign language gestures for real-time recognition.
-              ●	Built a custom sign gesture classification model using a Random Forest Classifier, trained on a hand-collected dataset.
-              ●	Utilized OpenCV to extract and preprocess hand gestures from live video streams.
-              ●	Constructed a custom dataset for model training and validation, capturing diverse sign language samples.
-              ●	Successfully implemented real-time landmark tracking; ongoing efforts focused on improving gesture prediction accuracy and model performance.
-        
+              >
+              > ●	Built a custom sign gesture classification model using a Random Forest Classifier, trained on a hand-collected dataset.
+              >
+              > ●	Utilized OpenCV to extract and preprocess hand gestures from live video streams.
+              >
+              > ●	Constructed a custom dataset for model training and validation, capturing diverse sign language samples.
+              >
+              > ●	Successfully implemented real-time landmark tracking; ongoing efforts focused on improving gesture prediction accuracy and model performance.
+              > 
+              > ●	**Technologies**: Python, OpenCV, MediaPipe
 
           # Agentic AI
         - type: id_agents
@@ -88,8 +98,10 @@ page_data:
               ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
 
               > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
-              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
-              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+              >
+              > ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
+              >
+              > ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
 
 
           # Flutter
@@ -100,11 +112,13 @@ page_data:
           img_title: "basic opengl viewer"
           date: "2025-07-21"
           post: |
-              ## [StartupAI: AI-Powered Business Analysis Agent  - Link](https://github.com/SomeZarz/Multi-Agent-startup-Platform)
+              ## [PETMEETING: A pet meet-matching platform   - Link](https://github.com/1822-official)
 
-              > ●	Developed a multi-agent system using LangGraph and OpenAI to automate startup business planning.
-              ●	Implemented a RAG pipeline with Tavily Search for real-time data retrieval, enabling agents to generate market analysis, financial projections, and technology roadmaps from a single user prompt.
-              ●	**Technologies**: Python, LangChain, LangGraph, OpenAI API, RAG, AWS EC2
+              > ●	Developed the frontend using flutter.
+              >
+              > ●	Spearheaded the project planning.
+              >
+              > ●	**Technologies**: Flutter
 
 
         # # python
