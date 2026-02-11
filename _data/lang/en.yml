@@ -175,8 +175,8 @@ constants:
   welcome: Hi there! I am
   intro: Software Engineer / Hanyang University
   subtitle: | 
-    4th year Computer Software Engineering student at Hanyang University in Seoul Korea. 
-    I'm passionate about most things tech, especially computer vision with a keen interest in autonomous driving. 
+    Recent Graduate of Computer Software Engineering (February 2026) at Hanyang University in Seoul Korea. 
+    I'm passionate about most things tech, especially Machine Learning, Backend Systems and computer vision with a keen interest in autonomous driving. 
     My final year capstone project is focused on 3D reconstruction from multiple images, where i explore NeRF and 3D Gaussian Splatting technologies.
 
 # for contact form
