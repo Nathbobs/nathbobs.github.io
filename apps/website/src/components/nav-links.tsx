@@ -13,10 +13,6 @@ const links = [
     label: 'Blog',
     href: '/blog',
   },
-  {
-    label: 'About Me',
-    href: '/about-me',
-  },
 ];
 
 export function NavLinks() {
