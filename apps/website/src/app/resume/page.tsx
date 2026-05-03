@@ -11,7 +11,7 @@ const experiences = [
   {
     company: 'Spacemap',
     jobTitle: 'Software Engineer Intern (Backend and LLM)',
-    period: 'Sep 2025 — Present',
+    period: 'Sep 2025 — Feb 2026',
     location: 'Seoul, South Korea',
     icon: <img src="https://www.spacemap42.com/logo-white.svg" alt="Spacemap" className="size-6 object-contain" />,
     iconBg: 'bg-black',
@@ -37,7 +37,7 @@ const experiences = [
   {
     company: 'British Airways',
     jobTitle: 'Junior Data Scientist Intern (Virtual)',
-    period: 'May 2024 — Jun 2024',
+    period: 'May 2023 — Jun 2024',
     location: 'London, United Kingdom',
     icon: <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/britishairways.svg" alt="British Airways" className="size-6 object-contain" />,
     iconBg: 'bg-white',
@@ -45,6 +45,7 @@ const experiences = [
       'Developed ML pipeline that scraped and analysed over 75,000 customer reviews for sentiment analysis.',
       'Using Random Forest and XGBoost, customer booking prediction achieved 85% accuracy.',
     ],
+    note: 'NOTE: This was a virtual internship, and the duration for the internship is not in actual reality the time it took me to complete the tasks required to obtain a certificate.',
   },
 ] as const;
 
@@ -90,7 +91,7 @@ export default function ResumePage() {
         <section className="grid gap-y-4">
           <h2 className="tracking-tight font-medium text-xl">Experience</h2>
           <div className="flex flex-col gap-12">
-            {experiences.map(({ company, jobTitle, period, location, icon, iconBg, achievements }) => (
+            {experiences.map(({ company, jobTitle, period, location, icon, iconBg, achievements, ...rest }) => (
               <article key={company}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
                   <div className={`flex size-10 shrink-0 items-center justify-center rounded-full border border-zinc-200/80 shadow-xs ${iconBg ?? 'bg-white'}`}>
@@ -114,6 +115,9 @@ export default function ResumePage() {
                         <li key={achievement}>{achievement}</li>
                       ))}
                     </ul>
+                    {(rest as { note?: string }).note && (
+                      <p className="mt-2 text-sm font-bold text-zinc-600">{(rest as { note?: string }).note}</p>
+                    )}
                   </div>
                 </div>
               </article>
