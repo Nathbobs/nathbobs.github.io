@@ -1,7 +1,7 @@
 ---
-title: Hello World
+title: Rebuild
 date: '2026-05-03'
 slug: hello-world
 ---
 
-Coming soon.
+Rebuilding website My portfolio website.
