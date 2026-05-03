@@ -6,7 +6,7 @@ type Props = Readonly<{
 
 export function Header({ rightContents }: Props) {
   return (
-    <div className="flex justify-between pb-8 items-end">
+    <div className="flex flex-col gap-y-2 sm:flex-row sm:justify-between sm:items-end pb-8">
       <Link className="font-medium tracking-tight text-2xl" href="/">
         Nathaniel Abegunde
       </Link>
