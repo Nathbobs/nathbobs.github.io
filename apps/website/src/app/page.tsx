@@ -15,10 +15,9 @@ export default function HomePage() {
         <section className="grid gap-y-4">
           <h2 className="sr-only tracking-tight font-medium text-4xl">About</h2>
           <p className="text-zinc-600 max-w-lg text-pretty">
-            I&apos;m Nathaniel, a Software Engineer, (Computer Vision & ML) based in Seoul. 
-            I build perception systems and real-time inference pipelines, 
-            from raw sensor data to actionable output. 
-            CSE grad from Hanyang University (GKS Scholar).
+            I&apos;m Nathaniel, a Software Engineer based in Seoul,
+            building towards a career in Computer Vision and Perception for autonomous vehicles. 
+            Recent Computer Software Eng. grad from Hanyang University (GKS Scholar).
           </p>
         </section>
         <section className="grid gap-y-6">
