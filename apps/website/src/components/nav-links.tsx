@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 const links = [
+  { label: 'Home', href: '/' },
   { label: 'Projects', href: '/projects' },
   { label: 'Resume', href: '/resume' },
   { label: 'Blog', href: '/blog' },
-  { label: 'About Me', href: '/about-me' },
 ];
 
 export function NavLinks() {
