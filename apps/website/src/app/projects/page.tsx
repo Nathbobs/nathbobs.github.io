@@ -4,6 +4,7 @@ import { SiPytorch, SiLangchain, SiOpencv } from 'react-icons/si';
 
 import { LunchboxItemLinkGitHubProject } from '~/lunchbox/prebuilt/lunchbox-item-link-github-project';
 import { NavLinks } from '~/components/nav-links';
+import { TbTrafficLights } from 'react-icons/tb';
 
 export const metadata: Metadata = {
   title: 'Projects | Nathaniel Abegunde',
@@ -19,6 +20,38 @@ export default function ProjectsPage() {
         <section className="grid gap-y-6">
           <h2 className="sr-only">Projects</h2>
           <div className="grid grid-cols-8 gap-4">
+            <LunchboxItemLinkGitHubProject
+              className="group"
+              rows={2}
+              cols={8}
+              freeHeight={true}
+              padding="p-6"
+              actionSpacing="mt-2"
+              username="Nathbobs"
+              repoName="CV_Projects"
+              githubUrl="https://github.com/Nathbobs/CV_Projects/tree/main/SeoulFlow"
+              title="SeoulFlow"
+              liveDemo="https://drive.google.com/file/d/1xHZmZJVeXSswRGN4WZnLGLx8SBc4owE6/view?usp=sharing"
+              description={
+                <span className="flex flex-col gap-1">
+                  <span>
+                    Real-time traffic congestion monitoring system using live Seoul CCTV footage.
+                    Detects and tracks vehicles with YOLOv8 and Kalman Filter, classifies congestion
+                    levels, and visualizes traffic density across key Seoul intersections.
+                  </span>
+                  <span>
+                    <span className="font-semibold text-zinc-700">Tech Stack:</span>{' '}
+                    Python, YOLOv8, OpenCV, Kalman Filter, FastAPI, CUDA, Chrome Extensions (Manifest V3)
+                  </span>
+                </span>
+              }
+              image={
+                <span className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                  <TbTrafficLights className="size-12 text-zinc-700" />
+                  <img src="https://img.icons8.com/?size=100&id=4RpOhIzbPx4i&format=png&color=000000" alt="CCTV" className="size-16 opacity-80 group-hover:opacity-100 transition" />
+                </span>
+              }
+            />
             <LunchboxItemLinkGitHubProject
               className="group"
               rows={3}
@@ -80,10 +113,11 @@ export default function ProjectsPage() {
               description={
                 <span className="flex flex-col gap-1">
                   <span>
-                    Graduation project comparing NeRF, Vanilla 3DGS,
-                    Scaffold-GS, and Feature-GS for 3D scene reconstruction
-                    from multi-view images. Integrated SAM for 3D object
-                    segmentation and manipulation using Open3D.
+                    Graduation project where I implemented and compared NeRF, Vanilla 3DGS, Scaffold-GS, 
+                    and Feature-GS on self-collected multi-view datasets, modified the 3DGS CUDA rasterizer to resolve OOM errors on an RTX 2070 (8GB VRAM), 
+                    enabling full training under hardware constraints. <br/>
+                    Integrated SAM embeddings into Feature-GS for 3D object segmentation and interactive manipulation via Open3D.
+
                   </span>
                   <span>
                     <span className="font-semibold text-zinc-700">
@@ -138,6 +172,7 @@ export default function ProjectsPage() {
               username="Nathbobs"
               repoName="CV_Projects"
               title="Sign Language Detection"
+              liveDemo="https://github.com/Nathbobs/CV_Projects/blob/main/signLanguage_Project/readme_media/failure_example.gif"
               description={
                 <span className="flex flex-col gap-1">
                   <span>

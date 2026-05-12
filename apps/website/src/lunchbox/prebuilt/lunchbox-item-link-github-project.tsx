@@ -11,6 +11,7 @@ type Props = Pick<SelfProps, 'className' | 'image' | 'padding' | 'actionSpacing'
     title?: string;
     username: string;
     repoName: string;
+    githubUrl?: string;
     description?: React.ReactNode;
     liveDemo?: string;
   }>;
@@ -22,6 +23,7 @@ export function LunchboxItemLinkGitHubProject({
   description,
   username,
   repoName,
+  githubUrl,
   liveDemo,
   ...props
 }: Props) {
@@ -30,7 +32,7 @@ export function LunchboxItemLinkGitHubProject({
   const action = (
     <div className="flex gap-2 flex-wrap">
       <a
-        href={`https://github.com/${username}/${repoName}`}
+        href={githubUrl ?? `https://github.com/${username}/${repoName}`}
         target="_blank"
         rel="noreferrer"
         className={[

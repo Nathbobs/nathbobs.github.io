@@ -15,9 +15,9 @@ export default function HomePage() {
         <section className="grid gap-y-4">
           <h2 className="sr-only tracking-tight font-medium text-4xl">About</h2>
           <p className="text-zinc-600 max-w-lg text-pretty">
-            I&apos;m Nathaniel, a Software Engineer (Data Engineer) based in
-            Seoul. I build data pipelines, from pulling in raw data to making
-            it useful. CS grad from Hanyang University (GKS Scholar).
+            I&apos;m Nathaniel, a Software Engineer based in Seoul,
+            building towards a career in Computer Vision and Perception for autonomous vehicles. 
+            Recent Computer Software Eng. grad from Hanyang University (GKS Scholar).
           </p>
         </section>
         <section className="grid gap-y-6">
