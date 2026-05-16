@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "home": "홈",
+    "projects": "프로젝트",
+    "resume": "이력서",
+    "blog": "블로그",
+    "switchTo": "English"
+  },
+  "home": {
+    "bio": "저는 나타니엘(Nathaniel)입니다. 서울을 기반으로 활동하는 소프트웨어 엔지니어로, 자율주행을 위한 컴퓨터 비전 및 퍼셉션 분야의 커리어를 목표로 하고 있습니다. 한양대학교 컴퓨터 소프트웨어 공학과 졸업생 (한국 정부 초청 장학생).",
+    "findMeOnline": "온라인에서 찾기"
+  },
+  "resume": {
+    "about": "데이터 및 백엔드 시스템 구축 경험을 보유한 소프트웨어 엔지니어입니다.",
+    "experience": "경력",
+    "education": "학력",
+    "skills": "기술",
+    "certifications": "자격증 및 수료증",
+    "virtualNote": "참고: 이것은 가상 인턴십이며, 인턴십 기간은 실제로 자격증 취득에 필요한 과제를 완료하는 데 걸린 시간을 반영하지 않습니다.",
+    "experiences": [
+      {
+        "company": "Spacemap",
+        "jobTitle": "소프트웨어 엔지니어 인턴 (백엔드 및 LLM)",
+        "period": "2025년 9월 — 2026년 2월",
+        "location": "대한민국 서울",
+        "achievements": [
+          "8GB VRAM 환경에서 Unsloth, PEFT, QLoRA 기법을 활용하여 440만 건의 위성 근접 이벤트 데이터로 다수의 시계열 LLM 아키텍처(Llama 3.2 1B, ChatTS)를 파인튜닝했습니다.",
+          "TypeScript를 활용하여 SpaceTube의 게시물 랭킹 알고리즘을 최적화했으며, 응답 시간을 257ms에서 109ms로 단축했습니다 (58% 개선).",
+          "FastAPI와 NestJS를 사용하여 결제 및 API 오류 발생 시 Google Chat 웹훅으로 알림을 전송하는 실시간 오류 모니터링 시스템을 구현했습니다.",
+          "HuggingFace 임베딩과 ChromaDB 검색을 활용한 RAG 시스템을 개발하여 우주 도메인 쿼리에 대한 응답 품질을 향상시켰습니다."
+        ]
+      },
+      {
+        "company": "Aidall Inc.",
+        "jobTitle": "AI 엔지니어 / 연구 인턴",
+        "period": "2024년 7월 — 2024년 9월",
+        "location": "대한민국 서울",
+        "achievements": [
+          "가축 데이터 처리를 위한 ETL 파이프라인을 구현했으며, 10시간 이상의 실제 음성 데이터를 추출하고 다양한 노이즈 제거 기법으로 ML 분류를 위한 전처리를 수행했습니다.",
+          "밴드패스 필터링과 오토인코더 기반 노이즈 제거를 실험하여 음질을 최적화했으며, 90% 이상의 모델 수렴을 달성했습니다."
+        ]
+      },
+      {
+        "company": "British Airways",
+        "jobTitle": "주니어 데이터 사이언티스트 인턴 (가상)",
+        "period": "2023년 5월 — 2024년 6월",
+        "location": "영국 런던",
+        "hasNote": true,
+        "achievements": [
+          "감성 분석을 위해 75,000건 이상의 고객 리뷰를 수집하고 분석하는 ML 파이프라인을 개발했습니다.",
+          "Random Forest와 XGBoost를 활용하여 고객 예약 예측에서 85% 정확도를 달성했습니다."
+        ]
+      }
+    ],
+    "educationItems": [
+      {
+        "institution": "한양대학교",
+        "degree": "컴퓨터 소프트웨어 공학 이학사",
+        "period": "",
+        "location": "대한민국 서울",
+        "details": ["한국 정부 초청 (GKS) 장학생", "한양대학교 사이클링 팀"]
+      }
+    ],
+    "skillItems": [
+      { "label": "프로그래밍 언어", "value": "Python, SQL, C/C++, JavaScript, TypeScript" },
+      { "label": "프레임워크 및 라이브러리", "value": "NestJS, FastAPI, PySpark, Pandas, PyTorch, TensorFlow, LangChain, Scikit-Learn, OpenCV, Unsloth" },
+      { "label": "데이터베이스 및 스토리지", "value": "Supabase PostgreSQL, MongoDB, ChromaDB, Vector Databases, Parquet" },
+      { "label": "머신러닝 / AI", "value": "LLM 파인튜닝 (QLoRA), RAG 파이프라인, 컴퓨터 비전, NeRF, 3D 가우시안 스플래팅" },
+      { "label": "플랫폼 및 도구", "value": "Git, Docker, AWS (EC2, S3), CUDA, Ubuntu/Linux, COLMAP, nerfStudio, Streamlit" },
+      { "label": "언어 능력", "value": "영어 (원어민), 한국어 (TOPIK 4급 – 비즈니스 수준)" }
+    ],
+    "certificationItems": [
+      { "title": "Palantir: Foundry Aware", "date": "2026년 3월" },
+      { "title": "AWS Cloud Practitioner", "date": "2026년 2월" },
+      { "title": "머신러닝 전문화 과정 (Stanford / Coursera)", "date": "2025년 3월" },
+      { "title": "생성형 AI 기초 (Udacity)", "date": "2025년 1월" }
+    ]
+  },
+  "projects": {
+    "techStackLabel": "기술 스택",
+    "dataSourceLabel": "데이터 출처",
+    "filters": {
+      "all": "전체",
+      "aiml": "AI / ML",
+      "data": "데이터 엔지니어링",
+      "backend": "백엔드"
+    },
+    "seoulflow": {
+      "description": "서울 실시간 CCTV 영상을 활용한 교통 혼잡도 모니터링 시스템. YOLOv8과 칼만 필터를 이용해 차량을 감지·추적하고, 혼잡 수준을 분류하며, 서울 주요 교차로의 교통 밀도를 시각화합니다.",
+      "techStack": "Python, YOLOv8, OpenCV, 칼만 필터, FastAPI, CUDA, Chrome Extensions (Manifest V3)"
+    },
+    "epc": {
+      "description": "석유 및 가스 조달 인텔리전스를 위한 프로덕션급 데이터 엔지니어링 파이프라인. 7개국, 92개 자재에 걸친 공급업체 리스크, 무역 동향, 자재 카테고리 성과를 추적하는 메달리온 아키텍처(브론즈 → 실버 → 골드) 기반입니다.",
+      "techStack": "Python, PySpark, Supabase PostgreSQL, Streamlit, Pandas, Plotly, Parquet, SQLAlchemy",
+      "dataSource": "UN Comtrade · HS Chapter 84 (산업 기계)"
+    },
+    "reconstruction": {
+      "description": "자체 수집한 멀티뷰 데이터셋에서 NeRF, Vanilla 3DGS, Scaffold-GS, Feature-GS를 구현하고 비교한 졸업 프로젝트. RTX 2070(8GB VRAM) 환경의 하드웨어 제약 하에서 전체 학습이 가능하도록 3DGS CUDA 래스터라이저를 수정하여 OOM 오류를 해결했습니다. Open3D를 통한 3D 객체 분할 및 상호작용 조작을 위해 Feature-GS에 SAM 임베딩을 통합했습니다.",
+      "techStack": "Python, PyTorch, COLMAP, NerfStudio, Open3D, SAM, MeshLab, CUDA 11.8"
+    },
+    "startupai": {
+      "description": "LLM 에이전트(CEO, CTO, CFO, COO)가 원탁 토론을 통해 스타트업 피치덱을 자동으로 생성하는 멀티에이전트 AI 플랫폼. LangGraph 오케스트레이션 파이프라인과 초기 MVP를 독자적으로 개발했습니다.",
+      "techStack": "Python, LangGraph, OpenAI GPT-4o, RAG Pipeline, Streamlit"
+    },
+    "signlanguage": {
+      "description": "MediaPipe와 Random Forest 분류기를 활용한 실시간 손 랜드마크 기반 수어 인식 시스템. 커스텀 데이터셋을 직접 구축하고 실시간 비디오 스트림 전처리에 OpenCV를 활용했습니다.",
+      "techStack": "Python, OpenCV, MediaPipe, Scikit-Learn"
+    },
+    "petmeeting": {
+      "description": "반려동물 주인들을 연결하는 Flutter 앱. 프로젝트 기획을 주도하고 프론트엔드를 개발했습니다.",
+      "techStack": "Flutter, Dart"
+    }
+  },
+  "blog": {
+    "backToAll": "모든 포스트로 돌아가기"
+  },
+  "footer": {
+    "copyright": "© Nathaniel Abegunde"
+  }
+}
