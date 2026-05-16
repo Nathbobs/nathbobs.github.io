@@ -79,6 +79,12 @@
   "projects": {
     "techStackLabel": "Tech Stack",
     "dataSourceLabel": "Data Source",
+    "filters": {
+      "all": "All",
+      "aiml": "AI / ML",
+      "data": "Data Engineering",
+      "backend": "Backend"
+    },
     "seoulflow": {
       "description": "Real-time traffic congestion monitoring system using live Seoul CCTV footage. Detects and tracks vehicles with YOLOv8 and Kalman Filter, classifies congestion levels, and visualizes traffic density across key Seoul intersections.",
       "techStack": "Python, YOLOv8, OpenCV, Kalman Filter, FastAPI, CUDA, Chrome Extensions (Manifest V3)"

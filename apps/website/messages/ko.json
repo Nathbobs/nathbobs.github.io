@@ -79,6 +79,12 @@
   "projects": {
     "techStackLabel": "기술 스택",
     "dataSourceLabel": "데이터 출처",
+    "filters": {
+      "all": "전체",
+      "aiml": "AI / ML",
+      "data": "데이터 엔지니어링",
+      "backend": "백엔드"
+    },
     "seoulflow": {
       "description": "서울 실시간 CCTV 영상을 활용한 교통 혼잡도 모니터링 시스템. YOLOv8과 칼만 필터를 이용해 차량을 감지·추적하고, 혼잡 수준을 분류하며, 서울 주요 교차로의 교통 밀도를 시각화합니다.",
       "techStack": "Python, YOLOv8, OpenCV, 칼만 필터, FastAPI, CUDA, Chrome Extensions (Manifest V3)"
