@@ -62,11 +62,11 @@
       }
     ],
     "skillItems": [
-      { "label": "Programming Languages", "value": "C/C++, Python, JavaScript, TypeScript" },
-      { "label": "Frameworks & Libraries", "value": "NestJS, FastAPI, PyTorch, TensorFlow, LangChain, Scikit-Learn, OpenCV, Unsloth" },
-      { "label": "Database & Storage", "value": "MongoDB, ChromaDB, Vector Databases" },
+      { "label": "Programming Languages", "value": "Python, SQL, C/C++, JavaScript, TypeScript" },
+      { "label": "Frameworks & Libraries", "value": "NestJS, FastAPI, PySpark, Pandas, PyTorch, TensorFlow, LangChain, Scikit-Learn, OpenCV, Unsloth" },
+      { "label": "Database & Storage", "value": "Supabase PostgreSQL, MongoDB, ChromaDB, Vector Databases, Parquet" },
       { "label": "ML / AI", "value": "LLM Fine-tuning (QLoRA), RAG Pipelines, Computer Vision, NeRF, 3D Gaussian Splatting" },
-      { "label": "Platforms & Tools", "value": "Git, Ubuntu/Linux, Docker, AWS (EC2, S3), COLMAP, nerfStudio, Streamlit" },
+      { "label": "Platforms & Tools", "value": "Git, Docker, AWS (EC2, S3), CUDA, Ubuntu/Linux, COLMAP, nerfStudio, Streamlit" },
       { "label": "Languages", "value": "English (Native), Korean (TOPIK Level 4 – Professional Proficiency)" }
     ],
     "certificationItems": [

@@ -62,11 +62,11 @@
       }
     ],
     "skillItems": [
-      { "label": "프로그래밍 언어", "value": "C/C++, Python, JavaScript, TypeScript" },
-      { "label": "프레임워크 및 라이브러리", "value": "NestJS, FastAPI, PyTorch, TensorFlow, LangChain, Scikit-Learn, OpenCV, Unsloth" },
-      { "label": "데이터베이스 및 스토리지", "value": "MongoDB, ChromaDB, Vector Databases" },
+      { "label": "프로그래밍 언어", "value": "Python, SQL, C/C++, JavaScript, TypeScript" },
+      { "label": "프레임워크 및 라이브러리", "value": "NestJS, FastAPI, PySpark, Pandas, PyTorch, TensorFlow, LangChain, Scikit-Learn, OpenCV, Unsloth" },
+      { "label": "데이터베이스 및 스토리지", "value": "Supabase PostgreSQL, MongoDB, ChromaDB, Vector Databases, Parquet" },
       { "label": "머신러닝 / AI", "value": "LLM 파인튜닝 (QLoRA), RAG 파이프라인, 컴퓨터 비전, NeRF, 3D 가우시안 스플래팅" },
-      { "label": "플랫폼 및 도구", "value": "Git, Ubuntu/Linux, Docker, AWS (EC2, S3), COLMAP, nerfStudio, Streamlit" },
+      { "label": "플랫폼 및 도구", "value": "Git, Docker, AWS (EC2, S3), CUDA, Ubuntu/Linux, COLMAP, nerfStudio, Streamlit" },
       { "label": "언어 능력", "value": "영어 (원어민), 한국어 (TOPIK 4급 – 비즈니스 수준)" }
     ],
     "certificationItems": [
